@@ -1,0 +1,142 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!--  主界面tab中RadioButton字体样式-->
+    <style name="slider_tab_style">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@drawable/slider_tab_tvcolor</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:background">@drawable/slider_tab_bgcolor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+
+
+    <!-- 设置统一字体样式-->
+    <style name="whitText">
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowRadius">3.0</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="whitText.topbar_right">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="whitText.title">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">18sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
+    <style name="whitText.text12">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="whitText.text14">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="whitText.text16">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="whitText.text18">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <!-- 设置统一字体样式-->
+    <style name="BlackText">
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BlackText.Small10">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="BlackText.Small12">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BlackText.Small13">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="BlackText.standard">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BlackText.Medium16">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BlackText.Medium17">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="BlackText.Medium18">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="BlackText.Medium19">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="BlackText.Large20">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">20sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
+    <style name="BlackText.Large21">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">21sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
+    <style name="BlackText.Large22">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">22sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
+    <style name="BlackText.Large24">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">24sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+</resources>

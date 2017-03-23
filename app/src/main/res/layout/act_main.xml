@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+    <include
+        android:id="@+id/layout_topbar"
+        layout="@layout/topbar_common"/>
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_topbar"
+        android:orientation="vertical"
+        android:paddingBottom="4dip"
+        tools:ignore="UselessParent">
+
+        <RadioButton
+            android:id="@+id/btn_message"
+            style="@style/slider_tab_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="@string/msg_list"
+            />
+
+        <RadioButton
+            android:id="@+id/btn_search"
+            style="@style/slider_tab_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="@string/msg_search"/>
+
+        <RadioButton
+            android:id="@+id/btn_vip"
+            style="@style/slider_tab_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="@string/vip_reg"/>
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_topbar"
+        android:layout_toRightOf="@+id/radiogroup">
+    </android.support.v4.view.ViewPager>
+</RelativeLayout>
