@@ -2,9 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
     <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/login_tv_style"
+        android:drawableRight="@mipmap/ic_launcher"
+        android:gravity="center_vertical|left"
+        android:hint="请输入日期"
+        android:layout_toLeftOf="@+id/tv_searchName"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_searchName"
+        android:layout_toLeftOf="@+id/tv_search"
+        android:layout_width="200dp"
+        android:layout_margin="10dp"
+        android:layout_height="50dp"
+        android:background="@drawable/login_tv_style"
+        android:drawableRight="@mipmap/ic_launcher"
+        android:gravity="center_vertical|left"
+        android:hint="请输入日期"
+        android:paddingLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_fresh"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/login_tv_style"
+        android:gravity="center_vertical"
+        android:text="刷新"/>
+
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_toLeftOf="@+id/tv_fresh"
+        android:background="@drawable/login_tv_style"
+        android:gravity="center_vertical"
+        android:text="查询"/>
+
+    <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:text="彩瓷啊wokagkja"
-        android:layout_height="match_parent"/>
+        android:background="@android:color/holo_red_light"
+        android:layout_below="@+id/tv_fresh"
+        android:layout_height="1dip"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:id="@+id/layout_menu"
+        android:layout_below="@+id/view"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </RelativeLayout>
