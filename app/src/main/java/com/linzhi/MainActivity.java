@@ -12,9 +12,8 @@ import android.widget.TextView;
 import com.linzhi.base.BaseActivity;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.fragment.MessageListFragment;
-import com.linzhi.fragment.MessageSearchFragment;
+import com.linzhi.fragment.RegSearchFragment;
 import com.linzhi.fragment.VipRegistFragment;
-import com.linzhi.widget.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,30 +33,28 @@ public class MainActivity extends BaseActivity {
 
     //信息列表
     @BindView(R.id.btn_message)
-    RadioButton btn_msgList;
+    RadioButton btn_msg_List;
 
     //信息查询
     @BindView(R.id.btn_search)
-    RadioButton btn_search;
+    RadioButton btn_search_vip;
 
     //vip
     @BindView(R.id.btn_vip)
-    RadioButton btn_vip;
-
-    //user信息
-    @BindView(R.id.img_user)
-    CircleImageView img_user;
+    RadioButton btn_vip_reg;
 
     private ViewPager viewPaper;
     private RadioGroup mRadioGroup;
 
     //变量
     MessageListFragment msgListFragment;
-    MessageSearchFragment msgSearchFragment;
+    RegSearchFragment msgSearchFragment;
     VipRegistFragment vipFragment;
 
     private int currentFragment;
     private List<BaseFragment> listFragment;
+
+    private static final String TAG = "SJY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +63,24 @@ public class MainActivity extends BaseActivity {
 
         initFragment();
         initListener();
+
+
+//        //注册
+//        Loading.run(this, new Runnable() {
+//            @Override
+//            public void run() {
+//                Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.sjy); // 不存在设置默认图片
+//                String base64 = ImageUtils.imgToBase64(null, bitmap);
+//                try {
+//                    UserHelper.postVipRegist(MainActivity.this, base64);
+//                } catch (MyException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+
+
     }
 
     private void initFragment() {
@@ -73,7 +88,7 @@ public class MainActivity extends BaseActivity {
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup); //
 
         msgListFragment = MessageListFragment.newInstance();
-        msgSearchFragment = MessageSearchFragment.newInstance();
+        msgSearchFragment = RegSearchFragment.newInstance();
         vipFragment = VipRegistFragment.newInstance();
 
         listFragment = new ArrayList<>();
@@ -99,7 +114,7 @@ public class MainActivity extends BaseActivity {
                     mRadioGroup.check(R.id.btn_search);
                     break;
                 case 2:
-                    mRadioGroup.check(R.id.img_user);
+                    mRadioGroup.check(R.id.btn_vip);
                     break;
             }
         }
@@ -124,7 +139,7 @@ public class MainActivity extends BaseActivity {
                         currentFragment = 1;
                         break;
 
-                    case R.id.img_user:
+                    case R.id.btn_vip:
                         currentFragment = 2;
                         break;
 

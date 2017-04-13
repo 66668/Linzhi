@@ -1,6 +1,7 @@
 package com.linzhi.helper;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -10,6 +11,8 @@ import com.linzhi.common.HttpResult;
 import com.linzhi.common.MyException;
 import com.linzhi.common.NetworkManager;
 import com.linzhi.db.entity.UserEntity;
+import com.linzhi.model.DetailModel;
+import com.linzhi.model.MessageListModel;
 import com.linzhi.model.SiteIDModel;
 import com.linzhi.utils.APIUtils;
 import com.linzhi.utils.ConfigUtil;
@@ -29,6 +32,7 @@ import java.util.List;
  * @author JackSong
  */
 public class UserHelper<T> {
+    private static final String TAG = "SJY";
     static UserEntity mCurrentUser = null;
     static String configUserManager = null;//
 
@@ -62,17 +66,16 @@ public class UserHelper<T> {
 
     /**
      * 01 密码登录
-     *
      */
-    public static void loginByPs(Context context,String siteID, String userName, String password) throws MyException {
+    public static void loginByPs(Context context, String siteID, String userName, String password) throws MyException {
         if (!NetworkManager.isNetworkAvailable(context))
             throw new MyException(R.string.network_invalid);
 
         JSONObject js = new JSONObject();
         try {
-            js.put("siteID",siteID);
-            js.put("userName",userName);
-            js.put("password",password);
+            js.put("siteID", siteID);
+            js.put("userName", userName);
+            js.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -100,6 +103,7 @@ public class UserHelper<T> {
 
     /**
      * 01-02 登录前获取网点号
+     *
      * @param context
      * @throws MyException
      */
@@ -112,8 +116,100 @@ public class UserHelper<T> {
         if (hr.hasError()) {
             throw hr.getError();
         }
-        return (new Gson()).fromJson(hr.jsonArray.toString(),new TypeToken<List<SiteIDModel>>() {
+        return (new Gson()).fromJson(hr.jsonArray.toString(), new TypeToken<List<SiteIDModel>>() {
         }.getType());
+    }
+
+    /**
+     * 获取信息列表
+     *
+     * @param context
+     * @param maxtTime
+     * @param minTime
+     * @return
+     * @throws MyException
+     */
+    public static List<MessageListModel> getMessageList(Context context, String maxtTime, String minTime) throws MyException {
+        if (!NetworkManager.isNetworkAvailable(context)) {
+            throw new MyException(R.string.network_invalid);
+        }
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("maxtime", maxtTime);
+            js.put("mintime", minTime);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "getMessageList: js=" + js.toString());
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.GET_MSG_LIST, js);
+        if (httpResult.hasError()) {
+            throw httpResult.getError();
+        }
+
+        return (new Gson()).fromJson(httpResult.jsonArray.toString(), new TypeToken<List<MessageListModel>>() {
+        }.getType());
+    }
+
+    /**
+     * 注册
+     *
+     * @param context
+     * @return
+     * @throws MyException
+     */
+    public static void postVipRegist(Context context, String base64) throws MyException {
+        if (!NetworkManager.isNetworkAvailable(context)) {
+            throw new MyException(R.string.network_invalid);
+        }
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("image", base64);
+            js.put("clientid", "9912");
+            js.put("remark", "1321");
+            js.put("name", "1");
+            js.put("gender", "1");
+            js.put("IDCardNo", "1");
+            js.put("level", "1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "getMessageList: js=" + js.toString());
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.POST_VIP_REG, js);
+        if (httpResult.hasError()) {
+            throw httpResult.getError();
+        }
+
+    }
+
+    /**
+     * 详情
+     *
+     * @param context
+     * @return
+     * @throws MyException
+     */
+    public static DetailModel getItemDetail(Context context, String clientid) throws MyException {
+        if (!NetworkManager.isNetworkAvailable(context)) {
+            throw new MyException(R.string.network_invalid);
+        }
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("clientid", clientid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "getMessageList: js=" + js.toString());
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.ITEM_DETAIL, js);
+        if (httpResult.hasError()) {
+            throw httpResult.getError();
+        }
+
+        return (new Gson()).fromJson(httpResult.jsonObject.toString(), DetailModel.class);
+
     }
 
 }

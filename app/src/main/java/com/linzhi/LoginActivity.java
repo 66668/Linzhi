@@ -126,16 +126,16 @@ public class LoginActivity extends BaseActivity {
         passWord = tv_psd.getText().toString().trim();
 
         //非空判断
-        if (!isEmpty()) {
-            return;
-        }
+//        if (!isEmpty()) {
+//            return;
+//        }
 
         Loading.run(this, new Runnable() {
             @Override
             public void run() {
                 try {
                     Log.d(TAG, "run: siteID="+siteID+"--userName="+userName+"--passWord="+passWord);
-                    UserHelper.loginByPs(getApplicationContext(), siteID, userName, passWord);
+                    UserHelper.loginByPs(getApplicationContext(), siteID, "aaa", "123");//userName passWord
                     sendMessage(POST_SUCCESS);
                 } catch (MyException e) {
                     Log.d("SJY", "登录异常：" + e.getMessage());

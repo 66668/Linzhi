@@ -10,6 +10,29 @@
 
     <!-- 主界面-->
     <string name="msg_list">信息列表</string>
-    <string name="msg_search">信息查询</string>
+    <string name="reg_search">信息查询</string>
     <string name="vip_reg">VIP注册</string>
+
+    <!-- reg-->
+    <string name="name">姓名</string>
+    <string name="gender">性别</string>
+    <string name="phone">电话</string>
+    <string name="cardId">身份证号</string>
+    <string name="level">客户等级</string>
+    <string name="remark">备注信息</string>
+    <string name="signin">提 交</string>
+
+    <string name="radioBtn_male">男</string>
+    <string name="radioBtn_female">女</string>
+
+    <string name="radioBtn_level1">钻石</string>
+    <string name="radioBtn_level2">黄金</string>
+    <string name="radioBtn_level3">铂金</string>
+    <string name="radioBtn_level4">白银</string>
+    <string name="radioBtn_level5">普通</string>
+
+    <string name="remark_hint">请输入备注信息</string>
+    <string name="cardId_hint">请输入身份证号</string>
+    <string name="phone_hint">请输入您的电话</string>
+    <string name="name_hint">请输入姓名</string>
 </resources>

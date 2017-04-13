@@ -48,7 +48,7 @@ public class VipRegistFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.act_msg_list, container, false);
+        View view = inflater.inflate(R.layout.act_vip_reg, container, false);
         initView(view);
         return view;
     }
