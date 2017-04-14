@@ -17,6 +17,15 @@ public class DetailModel implements Serializable {
     private String remark;
     private String activeFlag;
     private String createTime;
+    private String ImgPath;
+
+    public String getImgPath() {
+        return ImgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        ImgPath = imgPath;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

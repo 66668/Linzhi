@@ -28,7 +28,7 @@ public class MyApplication extends Application {
 	private static MyApplication instance;
 	private Context currentContext;
 	boolean isLogin = false;//自动登录判断使用
-	private final static String sdcardDirName = "YUEVISION";
+	private final static String sdcardDirName = "LINZHI";
 
     private List<Activity> listAct = new ArrayList<Activity>();//退出app使用
     private List<Activity> listCurrAct = new ArrayList<Activity>();//关闭多个使用

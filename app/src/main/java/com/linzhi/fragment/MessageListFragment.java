@@ -36,6 +36,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     private static final int GET_DATA_SUCCESS = 10;
     private static final int FRESH_DATA_SUCCESS = 11;
     private static final int LOAD_DATA_SUCCESS = 12;
+    private static final int GET_DETAIL_SUCCESS = 9;
 
     private static final int GET_DATA_FAILED = 13;
     private static final int FRESH_DATA_FAILED = 14;
@@ -48,7 +49,8 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     //变量
     private String maxTime = "";
     private String minTime = "";
-    ArrayList<MessageListModel> listdate;
+    private ArrayList<MessageListModel> listdate;
+    private DetailModel model;
 
     //单例模式
     public static MessageListFragment newInstance() {
@@ -75,7 +77,8 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         adapter = new MessageListAdapter(getActivity());
         listView.setAdapter(adapter);
     }
-    private void initListener(){
+
+    private void initListener() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -154,14 +157,15 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     /**
      * 获取详情数据
      */
-    private void getItemDetail(final String clientidDD){
+    private void getItemDetail(final String clientidDD) {
 
         //详情
         Loading.run(getActivity(), new Runnable() {
             @Override
             public void run() {
                 try {
-                  DetailModel model = UserHelper.getItemDetail(getActivity() ,clientidDD);
+                    DetailModel model = UserHelper.getItemDetail(getActivity(), clientidDD);
+                    handler.sendMessage(handler.obtainMessage(GET_DETAIL_SUCCESS, model));
 
                 } catch (MyException e) {
                     e.printStackTrace();
@@ -192,6 +196,12 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     adapter.addEntityList(listdate);
                     break;
 
+                case GET_DETAIL_SUCCESS:
+                    model = (DetailModel) msg.obj;
+                    dialogShow(model);
+                    break;
+
+
                 case GET_DATA_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     break;
@@ -208,6 +218,12 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         }
     };
 
+    /**
+     * 弹窗现实想请
+     */
+    private void dialogShow(DetailModel model) {
+
+    }
     //赋值
     private void setMaxTime(MessageListModel model) {
         maxTime = model.getTime();

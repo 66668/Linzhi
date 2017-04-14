@@ -31,10 +31,11 @@ import java.util.List;
  *
  * @author JackSong
  */
+
 public class UserHelper<T> {
     private static final String TAG = "SJY";
     static UserEntity mCurrentUser = null;
-    static String configUserManager = null;//
+    static String configUserManager = null;
 
     /**
      * (2)获取用户账号
@@ -158,24 +159,10 @@ public class UserHelper<T> {
      * @return
      * @throws MyException
      */
-    public static void postVipRegist(Context context, String base64) throws MyException {
+    public static void postVipRegist(Context context, JSONObject js) throws MyException {
         if (!NetworkManager.isNetworkAvailable(context)) {
             throw new MyException(R.string.network_invalid);
         }
-
-        JSONObject js = new JSONObject();
-        try {
-            js.put("image", base64);
-            js.put("clientid", "9912");
-            js.put("remark", "1321");
-            js.put("name", "1");
-            js.put("gender", "1");
-            js.put("IDCardNo", "1");
-            js.put("level", "1");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, "getMessageList: js=" + js.toString());
         HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.POST_VIP_REG, js);
         if (httpResult.hasError()) {
             throw httpResult.getError();

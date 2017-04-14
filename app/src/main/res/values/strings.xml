@@ -21,6 +21,8 @@
     <string name="level">客户等级</string>
     <string name="remark">备注信息</string>
     <string name="signin">提 交</string>
+    <string name="clientid">客户号</string>
+    <string name="clientid_hint">请输入客户号</string>
 
     <string name="radioBtn_male">男</string>
     <string name="radioBtn_female">女</string>

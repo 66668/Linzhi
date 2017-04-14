@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by sjy on 2017/3/23.
@@ -43,8 +44,11 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.btn_vip)
     RadioButton btn_vip_reg;
 
-    private ViewPager viewPaper;
-    private RadioGroup mRadioGroup;
+    @BindView(R.id.viewPaper)
+    ViewPager viewPaper;
+
+    @BindView(R.id.radiogroup)
+    RadioGroup mRadioGroup;
 
     //变量
     MessageListFragment msgListFragment;
@@ -61,31 +65,19 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
 
+        ButterKnife.bind(this);
+
         initFragment();
         initListener();
 
 
-//        //注册
-//        Loading.run(this, new Runnable() {
-//            @Override
-//            public void run() {
-//                Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.sjy); // 不存在设置默认图片
-//                String base64 = ImageUtils.imgToBase64(null, bitmap);
-//                try {
-//                    UserHelper.postVipRegist(MainActivity.this, base64);
-//                } catch (MyException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+
 
 
 
     }
 
     private void initFragment() {
-        viewPaper = (ViewPager) findViewById(R.id.viewPaper); //
-        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup); //
 
         msgListFragment = MessageListFragment.newInstance();
         msgSearchFragment = RegSearchFragment.newInstance();
@@ -170,5 +162,10 @@ public class MainActivity extends BaseActivity {
             }
 
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
