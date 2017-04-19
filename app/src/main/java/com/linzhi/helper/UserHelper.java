@@ -153,6 +153,34 @@ public class UserHelper<T> {
     }
 
     /**
+     * 查询信息列表
+     *
+     * @return
+     * @throws MyException
+     */
+    public static List<MessageListModel> searchMessageList(Context context, String searchTime, String searchName) throws MyException {
+        if (!NetworkManager.isNetworkAvailable(context)) {
+            throw new MyException(R.string.network_invalid);
+        }
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("searchTime", searchTime);
+            js.put("searchName", searchName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "getMessageList: js=" + js.toString());
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.SEARCH_MSG_LIST, js);
+        if (httpResult.hasError()) {
+            throw httpResult.getError();
+        }
+
+        return (new Gson()).fromJson(httpResult.jsonArray.toString(), new TypeToken<List<MessageListModel>>() {
+        }.getType());
+    }
+
+    /**
      * 注册
      *
      * @param context
@@ -171,7 +199,7 @@ public class UserHelper<T> {
     }
 
     /**
-     * 详情
+     * 列表详情
      *
      * @param context
      * @return

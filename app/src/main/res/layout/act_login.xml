@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@mipmap/lg_bg"
     tools:context="com.linzhi.LoginActivity">
 
     <RelativeLayout
         android:layout_width="370dp"
         android:layout_height="456dp"
-        android:background="@drawable/login_tv_style"
+        android:background="@drawable/login_layout_style"
         android:gravity="center_horizontal">
 
         <ImageView

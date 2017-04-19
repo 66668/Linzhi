@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 设置 tab 选中状态的颜色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@mipmap/topbar_regist" android:state_selected="true"/>
+    <item android:drawable="@mipmap/topbar_regist" android:state_focused="true"/>
+    <item android:drawable="@mipmap/topbar_regist" android:state_pressed="true"/>
+    <item android:drawable="@mipmap/topbar_regist" android:state_checked="true"/>
+    <item android:drawable="@mipmap/topbar_regist_uncelect"/>
+
+</selector>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.linzhi.application.MyApplication;
+import com.linzhi.receiver.ExitAppReceiver;
 import com.linzhi.utils.PageUtil;
 
 
@@ -25,20 +27,22 @@ import com.linzhi.utils.PageUtil;
 
 public class BaseActivity extends FragmentActivity {
 
-    //	// 关闭程序的类
-    //	private ExitAppReceiver exitAppReceiver = new ExitAppReceiver();
-    //	// 对应的Action
-    //	protected static final String EXIT_APP_ACTION = Intent.ACTION_CLOSE_SYSTEM_DIALOGS;//某一个包名也可？
-    //	//注册 退出功能 广播
-    //	private void registerExitRecevier() {
-    //		IntentFilter exitFilter = new IntentFilter();
-    //		exitFilter.addAction(EXIT_APP_ACTION);
-    //		this.registerReceiver(exitAppReceiver, exitFilter);
-    //	}
-    //	//onDestroy调用
-    //	private void unRegisterExitReceiver(){
-    //		this.unregisterReceiver(exitAppReceiver);//取消注册
-    //	}
+    // 关闭程序的类
+    private ExitAppReceiver exitAppReceiver = new ExitAppReceiver();
+    // 对应的Action
+    protected static final String EXIT_APP_ACTION = Intent.ACTION_CLOSE_SYSTEM_DIALOGS;//某一个包名也可？
+
+    //注册 退出功能 广播
+    private void registerExitRecevier() {
+        IntentFilter exitFilter = new IntentFilter();
+        exitFilter.addAction(EXIT_APP_ACTION);
+        this.registerReceiver(exitAppReceiver, exitFilter);
+    }
+
+    //onDestroy调用
+    private void unRegisterExitReceiver() {
+        this.unregisterReceiver(exitAppReceiver);//取消注册
+    }
 
     // 状态栏通知的管理类
     protected NotificationManager notificationManager;
@@ -72,7 +76,7 @@ public class BaseActivity extends FragmentActivity {
 
         // 通过 getSystemService()方法来获取管理类
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        //		registerExitRecevier();// 注册退出广播
+        registerExitRecevier();// 注册退出广播
         application = MyApplication.getInstance();
         application.addActvity(this);
     }
@@ -101,11 +105,12 @@ public class BaseActivity extends FragmentActivity {
     }
 
     //带返回值跳转重载
-    public void myStartForResult(Class<?> newClass, final int flag){
-        Intent intent = new Intent(this,newClass);
+    public void myStartForResult(Class<?> newClass, final int flag) {
+        Intent intent = new Intent(this, newClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(intent,flag);
+        startActivityForResult(intent, flag);
     }
+
     /**
      * handler sendMessage的处理
      */
@@ -191,7 +196,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         //退出程序的广播
-        //		unRegisterExitReceiver();
+        unRegisterExitReceiver();
         application.removeActvity(this);
     }
 }

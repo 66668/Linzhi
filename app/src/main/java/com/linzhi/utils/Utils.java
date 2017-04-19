@@ -149,6 +149,7 @@ public class Utils {
         return System.currentTimeMillis();
     }
 
+
     /**
      * 把时间戳转成日期字符串
      *
@@ -869,10 +870,24 @@ public class Utils {
 
     /**
      * 获取当前时间 yyyy-MM-dd HH:mm:ss
+     *
      * @return
      */
     public static String getCurrentTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String time = formatter.format(curDate);
+        return time;
+
+    }
+
+    /**
+     * 获取当前时间 yyyy-MM-dd HH:mm:ss
+     *
+     * @return
+     */
+    public static String getCurrentDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String time = formatter.format(curDate);
         return time;
@@ -899,7 +914,7 @@ public class Utils {
     }
 
     //bitmap 转 二进制
-    public static byte[] getyteFromBitmap(Bitmap bitmap){
+    public static byte[] getyteFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
         try {
@@ -912,11 +927,11 @@ public class Utils {
     }
 
     //二进制 转 bitmap
-    public Bitmap getBitmapFromByte(byte[] temp){
-        if(temp != null){
+    public Bitmap getBitmapFromByte(byte[] temp) {
+        if (temp != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(temp, 0, temp.length);
             return bitmap;
-        }else{
+        } else {
             return null;
         }
     }

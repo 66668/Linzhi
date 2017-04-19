@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void getSiteID() {
-        Loading.noDialogRun(this, new Runnable() {
+        Loading.run(this, new Runnable() {
             @Override
             public void run() {
                 try {
@@ -108,10 +108,12 @@ public class LoginActivity extends BaseActivity {
             PageUtil.DisplayToast("网点号不能为空！");
             return false;
         }
+
         if (TextUtils.isEmpty(userName)) {
             PageUtil.DisplayToast("用户名不能为空！");
             return false;
         }
+
         if (TextUtils.isEmpty(passWord)) {
             PageUtil.DisplayToast("密码不能为空！");
             return false;
@@ -122,20 +124,21 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.btn_login)
     public void Onclick() {
         //        siteID = tv_SiteID.getText().toString().trim();
-        userName = tv_userName.getText().toString().trim();
-        passWord = tv_psd.getText().toString().trim();
+        userName = "aaa";//tv_userName.getText().toString().trim();// aaa
+        passWord = "111";//tv_psd.getText().toString().trim();//123
 
         //非空判断
-//        if (!isEmpty()) {
-//            return;
-//        }
+        if (!isEmpty()) {
+            return;
+        }
 
         Loading.run(this, new Runnable() {
             @Override
             public void run() {
                 try {
                     Log.d(TAG, "run: siteID="+siteID+"--userName="+userName+"--passWord="+passWord);
-                    UserHelper.loginByPs(getApplicationContext(), siteID, "aaa", "123");//userName passWord
+
+                    UserHelper.loginByPs(getApplicationContext(), siteID, userName, passWord);//userName passWord
                     sendMessage(POST_SUCCESS);
                 } catch (MyException e) {
                     Log.d("SJY", "登录异常：" + e.getMessage());
@@ -152,6 +155,7 @@ public class LoginActivity extends BaseActivity {
         switch (msg.what) {
             case POST_SUCCESS:
                 startActivity(MainActivity.class);
+                this.finish();
                 break;
             case POST_FAILED:
                 PageUtil.DisplayToast((String) msg.obj);

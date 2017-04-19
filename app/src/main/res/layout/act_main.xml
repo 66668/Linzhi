@@ -11,11 +11,10 @@
 
     <RelativeLayout
         android:id="@+id/layout_btn"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_topbar"
         android:background="@android:color/white">
-        s
 
         <RadioGroup
             android:id="@+id/radiogroup"
@@ -28,12 +27,12 @@
                 android:id="@+id/btn_message"
                 style="@style/slider_tab_style"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="50dp"
                 android:checked="true"
-                android:drawableLeft="@mipmap/topbar_msglist"
+                android:drawableLeft="@drawable/topbar_msglist_style"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:padding="4dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="24dp"
                 android:text="@string/msg_list"
                 android:textSize="@dimen/common_textSize_default14"
                 />
@@ -42,12 +41,11 @@
                 android:id="@+id/btn_search"
                 style="@style/slider_tab_style"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:drawableLeft="@mipmap/topbar_regist"
-                android:drawablePadding="4dp"
+                android:layout_height="52dp"
+                android:drawableLeft="@mipmap/topbar_search"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:padding="4dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="24dp"
                 android:text="@string/reg_search"
                 android:textSize="@dimen/common_textSize_default14"/>
 
@@ -55,12 +53,11 @@
                 android:id="@+id/btn_vip"
                 style="@style/slider_tab_style"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="50dp"
                 android:drawableLeft="@mipmap/topbar_regist"
-                android:drawablePadding="4dp"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:padding="4dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="24dp"
                 android:text="@string/vip_reg"
                 android:textSize="@dimen/common_textSize_default14"/>
         </RadioGroup>

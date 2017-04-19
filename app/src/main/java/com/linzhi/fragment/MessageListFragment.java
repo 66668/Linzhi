@@ -1,6 +1,9 @@
 package com.linzhi.fragment;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.linzhi.R;
 import com.linzhi.adapter.MessageListAdapter;
 import com.linzhi.base.BaseFragment;
@@ -19,10 +26,19 @@ import com.linzhi.helper.UserHelper;
 import com.linzhi.model.DetailModel;
 import com.linzhi.model.MessageListModel;
 import com.linzhi.utils.PageUtil;
+import com.linzhi.utils.Utils;
+import com.linzhi.widget.DetailModelDialog;
 import com.linzhi.widget.RefreshAndLoadListView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -30,6 +46,18 @@ import java.util.List;
  */
 
 public class MessageListFragment extends BaseFragment implements RefreshAndLoadListView.ILoadMoreListener, RefreshAndLoadListView.IReflashListener {
+
+    @BindView(R.id.refreshList)
+    RefreshAndLoadListView listView;
+
+    @BindView(R.id.tv_time)
+    TextView tv_time;
+
+    @BindView(R.id.tv_search)
+    TextView tv_search;
+
+    @BindView(R.id.et_searchName)
+    EditText et_searchName;
 
     //常量
     private static final String TAG = "MessageListFragment";
@@ -43,12 +71,16 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     private static final int LOAD_DATA_FAILED = 15;
 
     //控件
-    private RefreshAndLoadListView listView;
     private MessageListAdapter adapter;
+    private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
+    private DatePickerDialog.OnDateSetListener mDateSetListener;//日历
 
     //变量
     private String maxTime = "";
     private String minTime = "";
+    private String searchTime;
+    private String searchName;
+    String currentTime;
     private ArrayList<MessageListModel> listdate;
     private DetailModel model;
 
@@ -62,7 +94,10 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.act_msg_list, container, false);
+        View view = inflater.inflate(R.layout.frg_msg_list, container, false);
+
+        ButterKnife.bind(this, view);//绑定framgent
+
         initView(view);
         getDate();
         initListener();
@@ -72,13 +107,15 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
 
     //界面详细
     public void initView(View view) {
-        listView = (RefreshAndLoadListView) view.findViewById(R.id.refreshList);
+        currentTime = Utils.getCurrentDate();
 
+        tv_time.setText(currentTime);
         adapter = new MessageListAdapter(getActivity());
         listView.setAdapter(adapter);
     }
 
     private void initListener() {
+        //详情数据显示
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -92,7 +129,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     }
 
     /**
-     * 刷新
+     * 下拉刷新
      */
     @Override
     public void onRefresh() {
@@ -101,7 +138,11 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
             public void run() {
                 try {
                     List<MessageListModel> listdate = UserHelper.getMessageList(getActivity(), maxTime, "");
-                    handler.sendMessage(handler.obtainMessage(FRESH_DATA_SUCCESS, listdate));
+                    if (listdate == null || listdate.size() <= 0) {
+                        handler.sendMessage(handler.obtainMessage(FRESH_DATA_FAILED, "没有最新数据"));
+                    } else {
+                        handler.sendMessage(handler.obtainMessage(FRESH_DATA_SUCCESS, listdate));
+                    }
                 } catch (MyException e) {
                     Log.d(TAG, "run: error=" + e.toString());
                     PageUtil.DisplayToast(e.toString());
@@ -121,7 +162,12 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
             public void run() {
                 try {
                     List<MessageListModel> listdate = UserHelper.getMessageList(getActivity(), "", minTime);
-                    handler.sendMessage(handler.obtainMessage(LOAD_DATA_SUCCESS, listdate));
+
+                    if (listdate == null || listdate.size() <= 0) {
+                        handler.sendMessage(handler.obtainMessage(LOAD_DATA_FAILED, "没有最新数据"));
+                    } else {
+                        handler.sendMessage(handler.obtainMessage(LOAD_DATA_SUCCESS, listdate));
+                    }
                 } catch (MyException e) {
                     Log.d(TAG, "run: error=" + e.toString());
                     PageUtil.DisplayToast(e.toString());
@@ -145,7 +191,13 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
             public void run() {
                 try {
                     List<MessageListModel> listdate = UserHelper.getMessageList(getActivity(), maxTime, minTime);
-                    handler.sendMessage(handler.obtainMessage(GET_DATA_SUCCESS, listdate));
+                    if (listdate == null || listdate.size() <= 0) {
+                        handler.sendMessage(handler.obtainMessage(GET_DATA_FAILED, "没有最新数据"));
+                    } else {
+                        handler.sendMessage(handler.obtainMessage(GET_DATA_SUCCESS, listdate));
+                    }
+
+
                 } catch (MyException e) {
                     Log.d(TAG, "run: error=" + e.toString());
                     handler.sendMessage(handler.obtainMessage(GET_DATA_FAILED, e.toString()));
@@ -172,6 +224,29 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                 }
             }
         });
+    }
+
+    /**
+     * 查询数据
+     */
+    @OnClick(R.id.tv_search)
+    public void searchDate(View view) {
+        searchName = et_searchName.getText().toString();
+        Log.d(TAG, "searchDate: 查询数据--searchTime=" + searchTime + "--searchName=" + searchName);
+
+        //        if (TextUtils.isEmpty(searchTime)) {
+        //            PageUtil.DisplayToast("查询时间请在选择确定！");
+        //            return;
+        //        }
+        //        if (TextUtils.isEmpty(searchName)) {
+        //            PageUtil.DisplayToast("查询时间请在选择确定！");
+        //            return;
+        //        }
+        try {
+            UserHelper.searchMessageList(getActivity(),searchTime,searchTime);
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
     }
 
     protected Handler handler = new Handler() {
@@ -201,7 +276,6 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     dialogShow(model);
                     break;
 
-
                 case GET_DATA_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     break;
@@ -213,17 +287,34 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                 case LOAD_DATA_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     listView.loadAndFreshComplete();
+
                     break;
             }
         }
     };
 
     /**
-     * 弹窗现实想请
+     * 弹窗现实详情
      */
     private void dialogShow(DetailModel model) {
+        Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
 
+
+        final DetailModelDialog dialog = new DetailModelDialog(getActivity(), model);
+        dialog.show();
+        dialog.setClicklistener(new DetailModelDialog.ClickListenerInterface() {
+            @Override
+            public void forSure() {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void forCancel() {
+                dialog.dismiss();
+            }
+        });
     }
+
     //赋值
     private void setMaxTime(MessageListModel model) {
         maxTime = model.getTime();
@@ -231,6 +322,34 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
 
     private void setMinTime(MessageListModel model) {
         minTime = model.getTime();
+    }
+
+    /**
+     * 选择时间
+     */
+    @OnClick(R.id.tv_time)
+    public void CalendarClick() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                getActivity(),
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                mDateSetListener,
+                year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                searchTime = year + "-" + ((month > 9) ? month : ("0" + month)) + "-" + ((day > 9) ? day : ("0" + day));
+                tv_time.setText(searchTime);
+            }
+        };
     }
 
 

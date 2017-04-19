@@ -125,7 +125,7 @@ public class VipRegistFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.act_vip_reg, container, false);
+        View view = inflater.inflate(R.layout.frg_vip_reg, container, false);
         ButterKnife.bind(this, view);//绑定framgent
 
         //获取屏幕像素尺寸

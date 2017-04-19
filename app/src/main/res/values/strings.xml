@@ -23,6 +23,8 @@
     <string name="signin">提 交</string>
     <string name="clientid">客户号</string>
     <string name="clientid_hint">请输入客户号</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
 
     <string name="radioBtn_male">男</string>
     <string name="radioBtn_female">女</string>
@@ -37,4 +39,14 @@
     <string name="cardId_hint">请输入身份证号</string>
     <string name="phone_hint">请输入您的电话</string>
     <string name="name_hint">请输入姓名</string>
+
+    <!-- list-->
+    <string name="search_name_hint">请输入客户姓名</string>
+    <string name="search">查询</string>
+
+    <!-- calendar-->
+    <string name="previous">Go to previous</string>
+    <string name="next">Go to next</string>
+    <string name="calendar">Calendar</string>
+    <string name="calendar_time">选择时间</string>
 </resources>

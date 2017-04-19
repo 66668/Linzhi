@@ -1,9 +1,11 @@
 package com.linzhi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by sjy on 2017/3/23.
@@ -69,11 +72,6 @@ public class MainActivity extends BaseActivity {
 
         initFragment();
         initListener();
-
-
-
-
-
 
     }
 
@@ -167,5 +165,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @OnClick(R.id.tv_quit)
+    public void quit(View view) {
+        Intent intent = new Intent();
+        intent.setAction(EXIT_APP_ACTION);
+        sendBroadcast(intent);//发送退出的广播
     }
 }

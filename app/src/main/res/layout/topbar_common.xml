@@ -31,7 +31,6 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="退出"
-            android:textColor="@android:color/black"
             android:textSize="@dimen/common_textSize_default16"/>
 
         <TextView
@@ -43,7 +42,6 @@
             android:layout_toLeftOf="@+id/tv_quit"
             android:gravity="center_vertical"
             android:text="用户名"
-            android:textColor="@android:color/black"
             android:textSize="@dimen/common_textSize_default16"/>
 
         <com.linzhi.widget.CircleImageView

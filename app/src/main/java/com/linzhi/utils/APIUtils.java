@@ -87,8 +87,6 @@ public class APIUtils {
 			} catch (Exception e){
 				throw new MyException(e.getMessage());
 			}
-
-
 	}
 
 	/**

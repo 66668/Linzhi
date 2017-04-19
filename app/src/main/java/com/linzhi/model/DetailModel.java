@@ -9,50 +9,42 @@ import java.io.Serializable;
 
 public class DetailModel implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String clientID;
-    private String clientName;
-    private String clientGender;
+    private String ClientID;
+    private String ClientName;
+    private String ClientGender;
     private String IDCardNo;
-    private String clientLevel;
-    private String remark;
-    private String activeFlag;
-    private String createTime;
+    private String ClientLevel;
+    private String Remark;
+    private String ActiveFlag;
+    private String CreateTime;
     private String ImgPath;
-
-    public String getImgPath() {
-        return ImgPath;
-    }
-
-    public void setImgPath(String imgPath) {
-        ImgPath = imgPath;
-    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
     public String getClientID() {
-        return clientID;
+        return ClientID;
     }
 
     public void setClientID(String clientID) {
-        this.clientID = clientID;
+        ClientID = clientID;
     }
 
     public String getClientName() {
-        return clientName;
+        return ClientName;
     }
 
     public void setClientName(String clientName) {
-        this.clientName = clientName;
+        ClientName = clientName;
     }
 
     public String getClientGender() {
-        return clientGender;
+        return ClientGender;
     }
 
     public void setClientGender(String clientGender) {
-        this.clientGender = clientGender;
+        ClientGender = clientGender;
     }
 
     public String getIDCardNo() {
@@ -64,34 +56,42 @@ public class DetailModel implements Serializable {
     }
 
     public String getClientLevel() {
-        return clientLevel;
+        return ClientLevel;
     }
 
     public void setClientLevel(String clientLevel) {
-        this.clientLevel = clientLevel;
+        ClientLevel = clientLevel;
     }
 
     public String getRemark() {
-        return remark;
+        return Remark;
     }
 
     public void setRemark(String remark) {
-        this.remark = remark;
+        Remark = remark;
     }
 
     public String getActiveFlag() {
-        return activeFlag;
+        return ActiveFlag;
     }
 
     public void setActiveFlag(String activeFlag) {
-        this.activeFlag = activeFlag;
+        ActiveFlag = activeFlag;
     }
 
     public String getCreateTime() {
-        return createTime;
+        return CreateTime;
     }
 
     public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+        CreateTime = createTime;
+    }
+
+    public String getImgPath() {
+        return ImgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        ImgPath = imgPath;
     }
 }
