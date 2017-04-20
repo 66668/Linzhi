@@ -15,30 +15,25 @@ import com.linzhi.base.BaseActivity;
 import com.linzhi.common.MyException;
 import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
+import com.linzhi.inject.ViewInject;
 import com.linzhi.model.SiteIDModel;
 import com.linzhi.utils.PageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import static com.linzhi.R.id.tv_SiteID;
-
 public class LoginActivity extends BaseActivity {
 
-    @BindView(tv_SiteID)
+    @ViewInject(id = R.id.tv_SiteID)
     Spinner spinner_SiteID;
 
-    @BindView(R.id.tv_userName)
+    @ViewInject(id = R.id.tv_userName)
     EditText tv_userName;
 
-    @BindView(R.id.tv_psd)
+    @ViewInject(id = R.id.tv_psd)
     EditText tv_psd;
 
-    @BindView(R.id.btn_login)
+    @ViewInject(id = R.id.btn_login,click = "toLogin")
     Button btn_login;
 
     //变量
@@ -59,15 +54,12 @@ public class LoginActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_login);
-        initView();
-        getSiteID();
+        Log.d(TAG, "onCreate: oncreate次数");
+        getSiteIDDate();
         initListener();
 
     }
 
-    private void initView() {
-        ButterKnife.bind(this);
-    }
 
     private void initListener() {
         //选择spinner
@@ -86,14 +78,13 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void getSiteID() {
+    private void getSiteIDDate() {
         Loading.run(this, new Runnable() {
             @Override
             public void run() {
                 try {
-                    List<SiteIDModel> listSiteID = new ArrayList<SiteIDModel>();
 
-                    listSiteID = UserHelper.getSiteID(LoginActivity.this);
+                    List<SiteIDModel> listSiteID = UserHelper.getSiteID(LoginActivity.this);
                     sendMessage(GET_SITE_SUCCESS, listSiteID);
                 } catch (MyException e) {
                     e.printStackTrace();
@@ -121,8 +112,7 @@ public class LoginActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick(R.id.btn_login)
-    public void Onclick() {
+    public void toLogin(View view) {
         //        siteID = tv_SiteID.getText().toString().trim();
         userName = "aaa";//tv_userName.getText().toString().trim();// aaa
         passWord = "111";//tv_psd.getText().toString().trim();//123
@@ -136,7 +126,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    Log.d(TAG, "run: siteID="+siteID+"--userName="+userName+"--passWord="+passWord);
+                    Log.d(TAG, "run: siteID=" + siteID + "--userName=" + userName + "--passWord=" + passWord);
 
                     UserHelper.loginByPs(getApplicationContext(), siteID, userName, passWord);//userName passWord
                     sendMessage(POST_SUCCESS);

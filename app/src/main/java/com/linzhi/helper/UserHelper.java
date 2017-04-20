@@ -117,6 +117,7 @@ public class UserHelper<T> {
         if (hr.hasError()) {
             throw hr.getError();
         }
+        Log.d("HTTP", "getSiteID:hr.jsonArray.toString()=" + hr.jsonArray.toString());
         return (new Gson()).fromJson(hr.jsonArray.toString(), new TypeToken<List<SiteIDModel>>() {
         }.getType());
     }

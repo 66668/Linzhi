@@ -16,13 +16,10 @@ import com.linzhi.base.BaseFragment;
 import com.linzhi.fragment.MessageListFragment;
 import com.linzhi.fragment.RegSearchFragment;
 import com.linzhi.fragment.VipRegistFragment;
+import com.linzhi.inject.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by sjy on 2017/3/23.
@@ -31,26 +28,26 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity {
 
     //退出
-    @BindView(R.id.tv_quit)
+    @ViewInject(id = R.id.tv_quit,click = "toQuit")
     TextView tv_quit;
 
 
     //信息列表
-    @BindView(R.id.btn_message)
+    @ViewInject(id = R.id.btn_message)
     RadioButton btn_msg_List;
 
     //信息查询
-    @BindView(R.id.btn_search)
+    @ViewInject(id = R.id.btn_search)
     RadioButton btn_search_vip;
 
     //vip
-    @BindView(R.id.btn_vip)
+    @ViewInject(id = R.id.btn_vip)
     RadioButton btn_vip_reg;
 
-    @BindView(R.id.viewPaper)
+    @ViewInject(id = R.id.viewPaper)
     ViewPager viewPaper;
 
-    @BindView(R.id.radiogroup)
+    @ViewInject(id = R.id.radiogroup)
     RadioGroup mRadioGroup;
 
     //变量
@@ -67,8 +64,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
-
-        ButterKnife.bind(this);
 
         initFragment();
         initListener();
@@ -167,8 +162,7 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @OnClick(R.id.tv_quit)
-    public void quit(View view) {
+    public void toQuit(View view) {
         Intent intent = new Intent();
         intent.setAction(EXIT_APP_ACTION);
         sendBroadcast(intent);//发送退出的广播

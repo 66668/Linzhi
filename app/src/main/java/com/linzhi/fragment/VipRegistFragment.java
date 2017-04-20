@@ -56,6 +56,10 @@ public class VipRegistFragment extends BaseFragment {
     @BindView(R.id.et_phone)
     EditText et_phone;
 
+    //客户号
+    @BindView(R.id.et_clientid)
+    EditText et_clientid;
+
     //身份证
     @BindView(R.id.et_cardid)
     EditText et_cardid;
@@ -158,6 +162,7 @@ public class VipRegistFragment extends BaseFragment {
                         js.put("name", name);
                         js.put("gender", gender);
                         js.put("IDCardNo", cardid);
+                        js.put("clientPhone", phone);
                         js.put("level", level);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -175,7 +180,8 @@ public class VipRegistFragment extends BaseFragment {
         name = et_name.getText().toString();
         phone = et_phone.getText().toString();
         cardid = et_cardid.getText().toString();
-        clientid = et_cardid.getText().toString();
+        clientid = et_clientid.getText().toString();
+        phone = et_phone.getText().toString();
         remark = et_remark.getText().toString();
         gender = radiogroup_gender.getCheckedRadioButtonId() == R.id.radioBtn_male ? "1" : "2";//性别
     }

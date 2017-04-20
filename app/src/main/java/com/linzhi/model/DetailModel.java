@@ -18,6 +18,15 @@ public class DetailModel implements Serializable {
     private String ActiveFlag;
     private String CreateTime;
     private String ImgPath;
+    private String clientPhone;
+
+    public String getClientPhone() {
+        return clientPhone;
+    }
+
+    public void setClientPhone(String clientPhone) {
+        this.clientPhone = clientPhone;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

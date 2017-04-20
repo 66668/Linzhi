@@ -12,7 +12,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-import com.linzhi.application.MyApplication;
+import com.linzhi.helper.ActivityInjectHelper;
+import com.linzhi.helper.InjectHelper;
 import com.linzhi.receiver.ExitAppReceiver;
 import com.linzhi.utils.PageUtil;
 
@@ -20,17 +21,51 @@ import com.linzhi.utils.PageUtil;
 /**
  * 详细说明： InjectView:
  * <p>
- * 引包v4.jar--FragmentActivity
+ * 引包：android-support-v4.jar--FragmentActivity
  *
  * @author JackSong
  */
-
 public class BaseActivity extends FragmentActivity {
-
     // 关闭程序的类
     private ExitAppReceiver exitAppReceiver = new ExitAppReceiver();
     // 对应的Action
     protected static final String EXIT_APP_ACTION = Intent.ACTION_CLOSE_SYSTEM_DIALOGS;//某一个包名也可？
+
+    // 状态栏通知的管理类
+    protected NotificationManager notificationManager;
+    // 常量 消息处理
+    public static final int MESSAGE_TOAST = 1001;
+    public static final int MESSAGE_CLOSE = 1002;
+    /**
+     * SDK服务是否启动
+     */
+    private static final int REQUEST_PERMISSION = 0;
+
+    // （1）setContentView方法重载
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        initView();// 获取反射
+    }
+
+    // (2)
+    public void setContentView(View view, LayoutParams params) {
+        super.setContentView(view, params);
+        initView();
+    }
+
+    // (3)
+    public void setContentView(View view) {
+        super.setContentView(view);
+        initView();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // 通过 getSystemService()方法来获取管理类
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        registerExitRecevier();// 先注册广播
+    }
 
     //注册 退出功能 广播
     private void registerExitRecevier() {
@@ -44,44 +79,6 @@ public class BaseActivity extends FragmentActivity {
         this.unregisterReceiver(exitAppReceiver);//取消注册
     }
 
-    // 状态栏通知的管理类
-    protected NotificationManager notificationManager;
-    private MyApplication application;
-    // 常量 消息处理
-    public static final int MESSAGE_TOAST = 1001;
-    public static final int MESSAGE_CLOSE = 1002;
-    /**
-     * SDK服务是否启动
-     */
-    private static final int REQUEST_PERMISSION = 0;
-
-    // （1）setContentView方法重载
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-    }
-
-    // (2)
-    public void setContentView(View view, LayoutParams params) {
-        super.setContentView(view, params);
-    }
-
-    // (3)
-    public void setContentView(View view) {
-        super.setContentView(view);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // 通过 getSystemService()方法来获取管理类
-        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        registerExitRecevier();// 注册退出广播
-        application = MyApplication.getInstance();
-        application.addActvity(this);
-    }
-
-
     /**
      * Activity
      *
@@ -90,7 +87,6 @@ public class BaseActivity extends FragmentActivity {
     // (1)页面跳转重载
     public void startActivity(Class<?> newClass) {
         Intent intent = new Intent(this, newClass);
-        //退出多个Activity的程序
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -99,16 +95,8 @@ public class BaseActivity extends FragmentActivity {
     public void startActivity(Class<?> newClass, Bundle extras) {
         Intent intent = new Intent(this, newClass);
         intent.putExtras(extras);
-        //退出多个Activity的程序
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-    }
-
-    //带返回值跳转重载
-    public void myStartForResult(Class<?> newClass, final int flag) {
-        Intent intent = new Intent(this, newClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(intent, flag);
     }
 
     /**
@@ -175,6 +163,18 @@ public class BaseActivity extends FragmentActivity {
         handler.sendEmptyMessage(MESSAGE_CLOSE);
     }
 
+    /**
+     * InjectHelper.initView setContentView方法调用
+     */
+    void initView() {
+        InjectHelper helper = new ActivityInjectHelper(this);
+        helper.initView();
+    }
+
+    // 枚举
+    public enum Method {
+        Click, LongClick, ItemClick, ItemLongClick
+    }
 
     // 生命周期函数
     @Override
@@ -195,8 +195,11 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //清空handler中的消息
+        handler.removeCallbacksAndMessages(null);
+
         //退出程序的广播
         unRegisterExitReceiver();
-        application.removeActvity(this);
+
     }
 }

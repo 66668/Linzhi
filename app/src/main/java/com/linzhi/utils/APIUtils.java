@@ -2,15 +2,12 @@ package com.linzhi.utils;
 
 import android.util.Log;
 
-import com.linzhi.common.HttpParameter;
 import com.linzhi.common.HttpResult;
 import com.linzhi.common.MyException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
 
 /**
  * 访问服务端类 01 将json转成HttpResult对象 toHttpResult 02
@@ -90,34 +87,6 @@ public class APIUtils {
 	}
 
 	/**
-	 * 传图片地址
-	 *
-	 * @param url
-	 * @param parameters
-	 * @param fileName
-	 * @return
-	 * @throws MyException
-	 */
-	 
-	public static HttpResult postForObject(String url, HttpParameter parameters, File fileName) throws MyException {
-		try {
-			JSONObject jsonObject = HttpUtils.getInstance().postStringURL(url, parameters, fileName); // httpURLConnection
-			Log.d("HTTP", jsonObject.toString());// 查看响应的信息
-			// 调用本类方法，返回读取的信息，封装在HttpResult中返回给调用方法(登录/注册/验证码)
-			return toHttpResult(jsonObject); // 将JSONObject对象-->HttpResult
-		} catch (MyException e) {
-            throw new MyException(e.getMessage());
-		}
-	}
-
-	/**
-	 * 04
-	 * 获取受访者
-	 * 获取一条记录的详细信息
-	 * 删除一条或多条记录
-	 * 获取登录人信息
-	 * httpGet
-	 * 
 	 * @param url
 	 * @return
 	 * @throws MyException
@@ -128,7 +97,7 @@ public class APIUtils {
 		try {
 			HttpUtils.getInstance();
 			JSONObject jsonObject = HttpUtils.getInstance().getByURL(url);
-			Log.d("HTTP", jsonObject.toString());
+			Log.d("HTTP", "post返回："+jsonObject.toString());
 			return toHttpResult(jsonObject);
 		} catch (MyException e) {
 			throw e;
