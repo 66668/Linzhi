@@ -1,14 +1,15 @@
 package com.linzhi.db.entity;
 
 
+import android.util.ArrayMap;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class TableInfo implements Serializable {
     /// <summary>
     /// </summary>
-    public HashMap<String, ColumnInfo> Columns;
+    public ArrayMap<String, ColumnInfo> Columns;
 
     protected String _tableName;
 
@@ -19,7 +20,7 @@ public class TableInfo implements Serializable {
     }
 
     public TableInfo() {
-        Columns = new HashMap<String, ColumnInfo>();
+        Columns = new ArrayMap<String, ColumnInfo>();
     }
 
     public void Add(String columnName, ColumnInfo column) {

@@ -1,4 +1,4 @@
-package com.linzhi.widget;
+package com.linzhi.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -36,7 +36,6 @@ public class DetailModelDialog extends Dialog {
     private ClickListenerInterface clickListenerInterface;
     //控件
     private ImageView img;
-    private TextView tv_clientid;
     private TextView tv_name;
     private TextView tv_gender;
     private TextView tv_cardId;
@@ -75,7 +74,6 @@ public class DetailModelDialog extends Dialog {
         imgLoader.init(ImageLoaderConfiguration.createDefault(context));
         imgOptions = ImageLoadingConfig.generateDisplayImageOptions(R.mipmap.default_photo);
         //初始化
-        tv_clientid = (TextView) view.findViewById(R.id.tv_clientid);
         tv_name = (TextView) view.findViewById(R.id.tv_name);
         tv_gender = (TextView) view.findViewById(R.id.tv_gender);
         tv_cardId = (TextView) view.findViewById(R.id.tv_cardId);
@@ -91,13 +89,11 @@ public class DetailModelDialog extends Dialog {
     }
 
     public void setValue() {
-        tv_clientid.setText(model.getClientID());
         tv_name.setText(model.getClientName());
         tv_gender.setText(model.getClientGender());
         tv_cardId.setText(model.getIDCardNo());
         tv_phone.setText(model.getClientPhone());
         tv_level.setText(model.getClientLevel());
-        tv_clientid.setText(model.getClientID());
         tv_remark.setText(model.getRemark());
 
         String url = WebUrl.getURL() + model.getImgPath();

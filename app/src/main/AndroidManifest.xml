@@ -28,7 +28,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="userLandscape">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -38,12 +38,17 @@
 
         <activity
             android:name=".MyChangeCameraActivity"
-            android:screenOrientation="userLandscape">
+            android:screenOrientation="landscape">
         </activity>
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="userLandscape">
+            android:screenOrientation="landscape">
+        </activity>
+
+        <activity
+            android:name=".ChangeVipMessageActivity"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 

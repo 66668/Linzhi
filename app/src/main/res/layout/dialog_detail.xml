@@ -9,6 +9,7 @@
 
         android:layout_width="380dp"
         android:layout_height="500dp">
+
         <FrameLayout
             android:id="@+id/layout_img"
             android:layout_width="wrap_content"
@@ -21,38 +22,12 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"/>
         </FrameLayout>
-        <!--客户号-->
-        <LinearLayout
-            android:id="@+id/layout_clientid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_img"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="5dp"
-                android:text="@string/clientid"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_textSize_default12"/>
-
-            <TextView
-                android:id="@+id/tv_clientid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_textSize_default12"/>
-        </LinearLayout>
         <!-- 姓名-->
         <LinearLayout
             android:id="@+id/layout_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_clientid"
+            android:layout_below="@+id/layout_img"
             android:orientation="horizontal">
 
             <TextView

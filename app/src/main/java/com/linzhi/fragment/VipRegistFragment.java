@@ -27,6 +27,7 @@ import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.utils.ImageUtils;
 import com.linzhi.utils.PageUtil;
+import com.linzhi.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,10 +56,6 @@ public class VipRegistFragment extends BaseFragment {
     //电话
     @BindView(R.id.et_phone)
     EditText et_phone;
-
-    //客户号
-    @BindView(R.id.et_clientid)
-    EditText et_clientid;
 
     //身份证
     @BindView(R.id.et_cardid)
@@ -112,7 +109,6 @@ public class VipRegistFragment extends BaseFragment {
     private String phone;
     private String cardid;
     private String level;
-    private String clientid;
     private String remark;
     private File picPath = null;
     private Point mPoint;//获取屏幕像素尺寸
@@ -148,6 +144,17 @@ public class VipRegistFragment extends BaseFragment {
         if (isEmpty()) {
             return;
         }
+        if (!Utils.isChinaPhoneLegal(phone)) {
+            PageUtil.DisplayToast("请输入正确手机号！");
+            return;
+        }
+        //身份证号可以不输入，或者输入正确的id
+        if (!TextUtils.isEmpty(cardid)) {
+            if (!Utils.isIDCard(cardid)) {
+                PageUtil.DisplayToast("请输入正确身份证号！");
+                return;
+            }
+        }
 
         Loading.run(getActivity(), new Runnable() {
             @Override
@@ -157,7 +164,6 @@ public class VipRegistFragment extends BaseFragment {
                     JSONObject js = new JSONObject();
                     try {
                         js.put("image", base64);
-                        js.put("clientid", clientid);
                         js.put("remark", remark);
                         js.put("name", name);
                         js.put("gender", gender);
@@ -180,7 +186,6 @@ public class VipRegistFragment extends BaseFragment {
         name = et_name.getText().toString();
         phone = et_phone.getText().toString();
         cardid = et_cardid.getText().toString();
-        clientid = et_clientid.getText().toString();
         phone = et_phone.getText().toString();
         remark = et_remark.getText().toString();
         gender = radiogroup_gender.getCheckedRadioButtonId() == R.id.radioBtn_male ? "1" : "2";//性别
@@ -223,10 +228,6 @@ public class VipRegistFragment extends BaseFragment {
             PageUtil.DisplayToast("手机号不能为空");
             return true;
         }
-        if (TextUtils.isEmpty(cardid.trim())) {
-            PageUtil.DisplayToast("身份证号不能为空");
-            return true;
-        }
         return false;
     }
 
@@ -238,12 +239,12 @@ public class VipRegistFragment extends BaseFragment {
         //自定义相机2
         Intent mCameraIntent = new Intent((MainActivity) getActivity(), MyChangeCameraActivity.class);
         startActivityForResult(mCameraIntent, REQUEST_CAMERA);
+        //系统相机调用
     }
 
     //拍照回调
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //        updateAvatarUtil.onActivityResultAction(requestCode, resultCode, data);
         if (resultCode != RESULT_OK)
             return;
 
@@ -251,7 +252,7 @@ public class VipRegistFragment extends BaseFragment {
             Uri photoUri = data.getData();
             Log.d(TAG, "onActivityResult: photoUri==null:" + (photoUri == null));
 
-            picPath = new File(ImageUtils.getImageAbsolutePath((MainActivity) getActivity(), photoUri));
+            picPath = new File(ImageUtils.getImageAbsolutePath(getActivity(), photoUri));
             //            picPath = new File(photoUri.toString());
             // Get the bitmap in according to the width of the device
 

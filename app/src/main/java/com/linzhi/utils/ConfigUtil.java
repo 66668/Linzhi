@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.linzhi.db.entity.UserEntity;
+import com.linzhi.db.entityimpl.UserEntity;
 
 import org.json.JSONObject;
 

@@ -2,6 +2,7 @@ package com.linzhi.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,17 +18,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.linzhi.ChangeVipMessageActivity;
 import com.linzhi.R;
 import com.linzhi.adapter.MessageListAdapter;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
+import com.linzhi.dialog.DetailModelDialog;
 import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.model.DetailModel;
 import com.linzhi.model.MessageListModel;
 import com.linzhi.utils.PageUtil;
 import com.linzhi.utils.Utils;
-import com.linzhi.widget.DetailModelDialog;
 import com.linzhi.widget.RefreshAndLoadListView;
 
 import java.text.DateFormat;
@@ -55,6 +57,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
 
     @BindView(R.id.tv_search)
     TextView tv_search;
+
 
     @BindView(R.id.et_searchName)
     EditText et_searchName;
@@ -176,7 +179,6 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                 }
             }
         });
-
     }
 
     /**
@@ -243,10 +245,20 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         //            return;
         //        }
         try {
-            UserHelper.searchMessageList(getActivity(),searchTime,searchTime);
+            UserHelper.searchMessageList(getActivity(), searchTime, searchTime);
         } catch (MyException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 刷新
+     */
+    @OnClick(R.id.tv_fresh)
+    public void getRefresh(View view) {
+        adapter = new MessageListAdapter(getActivity());
+        listView.setAdapter(adapter);
+        getDate();
     }
 
     protected Handler handler = new Handler() {
@@ -296,7 +308,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     /**
      * 弹窗现实详情
      */
-    private void dialogShow(DetailModel model) {
+    private void dialogShow(final DetailModel model) {
         Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
 
 
@@ -305,6 +317,12 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         dialog.setClicklistener(new DetailModelDialog.ClickListenerInterface() {
             @Override
             public void forSure() {
+                //修改
+                Intent intent = new Intent(getActivity(), ChangeVipMessageActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("DetailModel", model);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 dialog.dismiss();
             }
 
@@ -351,7 +369,6 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
             }
         };
     }
-
 
     @Override
     public String getFragmentName() {

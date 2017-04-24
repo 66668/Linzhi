@@ -23,7 +23,7 @@
     <string name="signin">提 交</string>
     <string name="clientid">客户号</string>
     <string name="clientid_hint">请输入客户号</string>
-    <string name="sure">确定</string>
+    <string name="sure">修改</string>
     <string name="cancel">取消</string>
 
     <string name="radioBtn_male">男</string>

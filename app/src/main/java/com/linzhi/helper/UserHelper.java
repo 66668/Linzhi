@@ -10,7 +10,7 @@ import com.linzhi.application.MyApplication;
 import com.linzhi.common.HttpResult;
 import com.linzhi.common.MyException;
 import com.linzhi.common.NetworkManager;
-import com.linzhi.db.entity.UserEntity;
+import com.linzhi.db.entityimpl.UserEntity;
 import com.linzhi.model.DetailModel;
 import com.linzhi.model.MessageListModel;
 import com.linzhi.model.SiteIDModel;
@@ -193,6 +193,24 @@ public class UserHelper<T> {
             throw new MyException(R.string.network_invalid);
         }
         HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.POST_VIP_REG, js);
+        if (httpResult.hasError()) {
+            throw httpResult.getError();
+        }
+
+    }
+
+    /**
+     * 修改注册
+     *
+     * @param context
+     * @return
+     * @throws MyException
+     */
+    public static void postChangeVip(Context context, JSONObject js) throws MyException {
+        if (!NetworkManager.isNetworkAvailable(context)) {
+            throw new MyException(R.string.network_invalid);
+        }
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.CHANGE_VIP_DETAIL, js);
         if (httpResult.hasError()) {
             throw httpResult.getError();
         }

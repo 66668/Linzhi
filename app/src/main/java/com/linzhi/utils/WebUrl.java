@@ -54,7 +54,13 @@ public class WebUrl {
         public static final String POST_VIP_REG = LOGIN_URL + GEN + "Register";
 
         /**
-         * 02 注册
+         * 修改注册
+         * http://localhost:8080/YueVisionLzh/Select
+         */
+        public static final String CHANGE_VIP_DETAIL = LOGIN_URL + GEN + "Update/Client";
+
+        /**
+         * 02 详情
          * http://localhost:8080/YueVisionLzh/Select
          */
         public static final String ITEM_DETAIL = LOGIN_URL + GEN + "Select";
