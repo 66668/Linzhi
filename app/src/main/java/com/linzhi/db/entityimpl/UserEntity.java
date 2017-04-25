@@ -17,4 +17,19 @@ public class UserEntity extends EntityBase {
     public UserEntity() {
         _tableSchema = UserTable.Current();
     }
+
+    public void setUserName(String userName){
+        SetData(UserTable.C_userName, userName);
+    }
+    public String getUserName(){
+        return (String) GetData(UserTable.C_passWord);
+    }
+
+    public void setPassword(String password) {
+        SetData(UserTable.C_passWord, password);
+    }
+
+    public String getPassword() {
+        return (String) GetData(UserTable.C_passWord);
+    }
 }

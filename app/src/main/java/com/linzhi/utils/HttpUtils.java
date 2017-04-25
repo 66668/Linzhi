@@ -1,5 +1,7 @@
 package com.linzhi.utils;
 
+import android.util.Log;
+
 import com.linzhi.R;
 import com.linzhi.application.MyApplication;
 import com.linzhi.common.MyException;
@@ -188,26 +190,32 @@ public class HttpUtils {
             }
         } catch (ProtocolException e) {
             e.printStackTrace();
+            Log.d("HTTP", "ProtocolException: e="+e.toString());
             throw new MyException(e.toString());
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Log.d("HTTP", "MalformedURLException: e="+e.toString());
             throw new MyException(e.toString());
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            Log.d("HTTP", "UnsupportedEncodingException: e="+e.toString());
             throw new MyException(e.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d("HTTP", "IOException: e="+e.toString());
             throw new MyException(e.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("HTTP", "JSONException: e="+e.toString());
             throw new MyException(e.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("HTTP", "Exception: e="+e.toString());
             throw new MyException(e.toString());
         } finally {
             try {

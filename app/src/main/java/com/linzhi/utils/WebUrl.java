@@ -6,7 +6,7 @@ public class WebUrl {
      * 根接口
      */
     // 云端
-    private static final String LOGIN_URL = "http://192.168.1.198:8080/";//192.168.1.111:8080/YueVisionLzh/Select/site
+    private static final String LOGIN_URL = "http://192.168.1.227:8080/";//192.168.1.111:8080/YueVisionLzh/Select/site
 
 
     /**
@@ -45,7 +45,7 @@ public class WebUrl {
         /**
          * 查询列表数据
          */
-        public static final String SEARCH_MSG_LIST = LOGIN_URL + GEN + "searchMessageList";
+        public static final String SEARCH_MSG_LIST = LOGIN_URL + GEN + "/searchRecord/getRecordMessage";
 
         /**
          * 注册

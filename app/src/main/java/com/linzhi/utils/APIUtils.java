@@ -82,6 +82,7 @@ public class APIUtils {
 				// 调用本类方法，返回读取的信息，封装在HttpResult中返回给调用方法(登录/注册/验证码)
 				return toHttpResult(jsonObject); // 将JSONObject对象-->HttpResult
 			} catch (Exception e){
+				Log.d("HTTP", "postForObject: e="+e.toString());
 				throw new MyException(e.getMessage());
 			}
 	}

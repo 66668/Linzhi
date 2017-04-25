@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.linzhi.base.BaseActivity;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.fragment.MessageListFragment;
-import com.linzhi.fragment.RegSearchFragment;
+import com.linzhi.fragment.VipSearchFragment;
 import com.linzhi.fragment.VipRegistFragment;
 import com.linzhi.inject.ViewInject;
 
@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity {
 
     //变量
     MessageListFragment msgListFragment;
-    RegSearchFragment msgSearchFragment;
+    VipSearchFragment msgSearchFragment;
     VipRegistFragment vipFragment;
 
     private int currentFragment;
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
 
         msgListFragment = MessageListFragment.newInstance();
-        msgSearchFragment = RegSearchFragment.newInstance();
+        msgSearchFragment = VipSearchFragment.newInstance();
         vipFragment = VipRegistFragment.newInstance();
 
         listFragment = new ArrayList<>();

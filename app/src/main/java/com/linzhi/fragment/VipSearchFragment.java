@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * BottomBar 应用
  */
 
-public class RegSearchFragment extends BaseFragment {
+public class VipSearchFragment extends BaseFragment {
 
     TextView tv_level;
 
@@ -44,8 +44,8 @@ public class RegSearchFragment extends BaseFragment {
     private String[] popContents = new String[]{"钻石会员", "铂金会员", "黄金会员", "白银会员", "普通会员"};
 
     //单例模式
-    public static RegSearchFragment newInstance() {
-        RegSearchFragment messageListFragment = new RegSearchFragment();
+    public static VipSearchFragment newInstance() {
+        VipSearchFragment messageListFragment = new VipSearchFragment();
         return messageListFragment;
     }
 

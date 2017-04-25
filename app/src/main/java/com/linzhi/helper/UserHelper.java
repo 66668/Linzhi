@@ -90,7 +90,7 @@ public class UserHelper<T> {
         //返回个人信息保存
         UserEntity uEntity = new UserEntity();
         //登录信息保存
-        uEntity.setWorkId(userName);
+        uEntity.setUserName(userName);
         uEntity.setPassword(password);
 
         // ConfigUtil中断保存，在退出后重新登录用getAccount()调用
@@ -159,20 +159,13 @@ public class UserHelper<T> {
      * @return
      * @throws MyException
      */
-    public static List<MessageListModel> searchMessageList(Context context, String searchTime, String searchName) throws MyException {
+    public static List<MessageListModel> searchMessageList(Context context, JSONObject js) throws MyException {
         if (!NetworkManager.isNetworkAvailable(context)) {
             throw new MyException(R.string.network_invalid);
         }
 
-        JSONObject js = new JSONObject();
-        try {
-            js.put("searchTime", searchTime);
-            js.put("searchName", searchName);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         Log.d(TAG, "getMessageList: js=" + js.toString());
-        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.SEARCH_MSG_LIST, js);
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.SEARCH_MSG_LIST, js);//WebUrl.UserManager.SEARCH_MSG_LIST
         if (httpResult.hasError()) {
             throw httpResult.getError();
         }
