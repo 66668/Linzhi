@@ -22,7 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  * Created by sjy on 2017/4/14.
  */
 
-public class DetailModelDialog extends Dialog {
+public class DetailRecordDialog extends Dialog {
 
     private final String TAG = "SJY";
     //变量
@@ -52,7 +52,7 @@ public class DetailModelDialog extends Dialog {
         public void forCancel();
     }
 
-    public DetailModelDialog(Context context, DetailModel model) {
+    public DetailRecordDialog(Context context, DetailModel model) {
         super(context);
         this.context = context;
         this.model = model;
@@ -67,7 +67,7 @@ public class DetailModelDialog extends Dialog {
 
     public void init() {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.dialog_detail, null);
+        View view = inflater.inflate(R.layout.record_dialog_detail, null);
         setContentView(view);
 
         imgLoader = ImageLoader.getInstance();

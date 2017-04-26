@@ -24,7 +24,7 @@ import com.linzhi.R;
 import com.linzhi.adapter.MessageListAdapter;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
-import com.linzhi.dialog.DetailModelDialog;
+import com.linzhi.dialog.DetailRecordDialog;
 import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.model.DetailModel;
@@ -477,9 +477,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
 
 
-        final DetailModelDialog dialog = new DetailModelDialog(getActivity(), model);
+        final DetailRecordDialog dialog = new DetailRecordDialog(getActivity(), model);
         dialog.show();
-        dialog.setClicklistener(new DetailModelDialog.ClickListenerInterface() {
+        dialog.setClicklistener(new DetailRecordDialog.ClickListenerInterface() {
             @Override
             public void forSure() {
                 //修改
@@ -532,6 +532,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                 searchTime = year + "-" + ((month > 9) ? month : ("0" + month)) + "-" + ((day > 9) ? day : ("0" + day));
                 tv_time.setText(searchTime);
             }
+
         };
     }
 

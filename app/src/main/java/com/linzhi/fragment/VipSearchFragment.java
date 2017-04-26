@@ -1,6 +1,7 @@
 package com.linzhi.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,12 +18,16 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.linzhi.ChangeVipMessageActivity;
 import com.linzhi.R;
 import com.linzhi.adapter.VipSearchAdapter;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
+import com.linzhi.dialog.DetailRecordDialog;
 import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
+import com.linzhi.model.DetailModel;
 import com.linzhi.model.VipSearchListModel;
 import com.linzhi.utils.AppCommonUtils;
 import com.linzhi.utils.PageUtil;
@@ -66,6 +71,8 @@ public class VipSearchFragment extends BaseFragment {
     private static final String TAG = "VipSearchFragment";
     private static final int SEARCH_DETA_SUCCESS = 10;
     private static final int SEARCH_DETA_FAILED = 11;
+    private static final int SEARCH_DETAILE_SUCCESS = 12;
+    private static final int SEARCH_DETAILE_FAILED = 13;
     // 会员列表数据 等级依次是1--5
     private String[] popContents = new String[]{"钻石会员", "铂金会员", "黄金会员", "白银会员", "普通会员"};
 
@@ -106,11 +113,13 @@ public class VipSearchFragment extends BaseFragment {
     }
 
     //监听
-    private void initListener(){
+    private void initListener() {
         //点击查看详情
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.d(TAG, "onItemClick: item详情position=" + position);
                 VipSearchListModel model = (VipSearchListModel) adapter.getItem(position);
                 getDetailDate(model.getClientID());
             }
@@ -120,6 +129,10 @@ public class VipSearchFragment extends BaseFragment {
     //搜索
     @OnClick(R.id.tv_search)
     public void ForSearch(View view) {
+
+        adapter = new VipSearchAdapter(getActivity());
+        listView.setAdapter(adapter);
+
         searchName = tv_searchName.getText().toString();
         Loading.run(getActivity(), new Runnable() {
             @Override
@@ -150,12 +163,20 @@ public class VipSearchFragment extends BaseFragment {
     /**
      * vip查询详情
      */
-    private void getDetailDate(String clientID){
-
+    private void getDetailDate(final String clientID) {
+        //详情
         Loading.run(getActivity(), new Runnable() {
             @Override
             public void run() {
+                try {
+                    DetailModel model = UserHelper.getItemDetail(getActivity(), clientID);
+                    handler.sendMessage(handler.obtainMessage(SEARCH_DETAILE_SUCCESS, model));
 
+                } catch (MyException e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "run: error=" + e.getMessage());
+                    handler.sendMessage(handler.obtainMessage(SEARCH_DETAILE_FAILED, e.getMessage()));
+                }
             }
         });
     }
@@ -173,12 +194,46 @@ public class VipSearchFragment extends BaseFragment {
                 case SEARCH_DETA_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     break;
+                case SEARCH_DETAILE_SUCCESS://
+                    DetailModel model=(DetailModel) msg.obj;
+                    dialogShow(model);
+                    break;
+
+                case SEARCH_DETAILE_FAILED:
+                    PageUtil.DisplayToast((String) msg.obj);
+                    break;
 
             }
         }
     };
 
+    /**
+     * 弹窗现实详情
+     */
+    private void dialogShow(final DetailModel model) {
+        Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
 
+
+        final DetailRecordDialog dialog = new DetailRecordDialog(getActivity(), model);
+        dialog.show();
+        dialog.setClicklistener(new DetailRecordDialog.ClickListenerInterface() {
+            @Override
+            public void forSure() {
+                //修改
+                Intent intent = new Intent(getActivity(), ChangeVipMessageActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("DetailModel", model);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void forCancel() {
+                dialog.dismiss();
+            }
+        });
+    }
     @Override
     public String getFragmentName() {
         return TAG;

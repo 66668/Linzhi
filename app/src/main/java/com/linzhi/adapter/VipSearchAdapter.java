@@ -72,7 +72,8 @@ public class VipSearchAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return entityList.get(position);
+        //listView的item监听是从1开始计算，而list是从0计算，中间差一个计数
+        return entityList.get(position-1);
     }
 
     @Override

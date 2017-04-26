@@ -51,6 +51,10 @@ public class WebUrl {
          * 02-03 详情
          */
         public static final String ITEM_DETAIL = LOGIN_URL + GEN + "/getRecord/getRecordDetail";
+/**
+         * 02-03 详情
+         */
+        public static final String VIP_ITEM_DETAIL = LOGIN_URL + GEN + "/getRecord/getVipDetail";
 
         /**
          * 02-04修改注册

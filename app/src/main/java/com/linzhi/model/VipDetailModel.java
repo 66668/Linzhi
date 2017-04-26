@@ -9,16 +9,35 @@ import java.io.Serializable;
 
 public class VipDetailModel implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String ClientID;
-    private String ClientName;
-    private String ClientGender;
-    private String IDCardNo;
-    private String ClientLevel;
-    private String Remark;
-    private String ActiveFlag;
-    private String CreateTime;
-    private String ImgPath;
-    private String clientPhone;
+    private String clientID; //客户号
+    private String clientName;//客户名字
+    private String clientPhone;//客户手机号
+    private String clientGender;//性别  1男 2女
+    private String IDCardNo;//身份证号
+    private String clientLevel;//客户等级
+    private String remark;//备注
+    private String createTime;//创建时间
+    private String path;//图片路径
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 
     public String getClientPhone() {
         return clientPhone;
@@ -28,32 +47,12 @@ public class VipDetailModel implements Serializable {
         this.clientPhone = clientPhone;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public String getClientID() {
-        return ClientID;
-    }
-
-    public void setClientID(String clientID) {
-        ClientID = clientID;
-    }
-
-    public String getClientName() {
-        return ClientName;
-    }
-
-    public void setClientName(String clientName) {
-        ClientName = clientName;
-    }
-
     public String getClientGender() {
-        return ClientGender;
+        return clientGender;
     }
 
     public void setClientGender(String clientGender) {
-        ClientGender = clientGender;
+        this.clientGender = clientGender;
     }
 
     public String getIDCardNo() {
@@ -65,42 +64,34 @@ public class VipDetailModel implements Serializable {
     }
 
     public String getClientLevel() {
-        return ClientLevel;
+        return clientLevel;
     }
 
     public void setClientLevel(String clientLevel) {
-        ClientLevel = clientLevel;
+        this.clientLevel = clientLevel;
     }
 
     public String getRemark() {
-        return Remark;
+        return remark;
     }
 
     public void setRemark(String remark) {
-        Remark = remark;
-    }
-
-    public String getActiveFlag() {
-        return ActiveFlag;
-    }
-
-    public void setActiveFlag(String activeFlag) {
-        ActiveFlag = activeFlag;
+        this.remark = remark;
     }
 
     public String getCreateTime() {
-        return CreateTime;
+        return createTime;
     }
 
     public void setCreateTime(String createTime) {
-        CreateTime = createTime;
+        this.createTime = createTime;
     }
 
-    public String getImgPath() {
-        return ImgPath;
+    public String getPath() {
+        return path;
     }
 
-    public void setImgPath(String imgPath) {
-        ImgPath = imgPath;
+    public void setPath(String path) {
+        this.path = path;
     }
 }
