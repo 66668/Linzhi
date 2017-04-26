@@ -14,6 +14,7 @@ import com.linzhi.db.entityimpl.UserEntity;
 import com.linzhi.model.DetailModel;
 import com.linzhi.model.MessageListModel;
 import com.linzhi.model.SiteIDModel;
+import com.linzhi.model.VipSearchListModel;
 import com.linzhi.utils.APIUtils;
 import com.linzhi.utils.ConfigUtil;
 import com.linzhi.utils.WebUrl;
@@ -66,7 +67,7 @@ public class UserHelper<T> {
     }
 
     /**
-     * 01 密码登录
+     * 01-01密码登录
      */
     public static void loginByPs(Context context, String siteID, String userName, String password) throws MyException {
         if (!NetworkManager.isNetworkAvailable(context))
@@ -123,7 +124,7 @@ public class UserHelper<T> {
     }
 
     /**
-     * 获取信息列表
+     * 02-01获取信息列表
      *
      * @param context
      * @param maxtTime
@@ -154,7 +155,7 @@ public class UserHelper<T> {
     }
 
     /**
-     * 查询信息列表
+     * 02-02查询信息列表
      *
      * @return
      * @throws MyException
@@ -174,26 +175,38 @@ public class UserHelper<T> {
         }.getType());
     }
 
+
     /**
-     * 注册
+     * 02-03详情
      *
      * @param context
      * @return
      * @throws MyException
      */
-    public static void postVipRegist(Context context, JSONObject js) throws MyException {
+    public static DetailModel getItemDetail(Context context, String clientid) throws MyException {//DetailModel
         if (!NetworkManager.isNetworkAvailable(context)) {
             throw new MyException(R.string.network_invalid);
         }
-        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.POST_VIP_REG, js);
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("clientid", clientid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "getMessageList: js=" + js.toString());
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.ITEM_DETAIL, js);
         if (httpResult.hasError()) {
             throw httpResult.getError();
         }
+        Log.d(TAG, "getItemDetail: httpResult.jsonObject.toString()=" + httpResult.jsonObject.toString());
+        return (new Gson()).fromJson(httpResult.jsonObject.toString(), DetailModel.class);
 
     }
 
     /**
-     * 修改注册
+     * 02-04修改注册
      *
      * @param context
      * @return
@@ -211,32 +224,38 @@ public class UserHelper<T> {
     }
 
     /**
-     * 列表详情
+     * 03-01查询注册人员
+     */
+    public static List<VipSearchListModel> searchVip(Context context, JSONObject js) throws MyException {
+        if (!NetworkManager.isNetworkAvailable(context)) {
+            throw new MyException(R.string.network_invalid);
+        }
+
+        Log.d(TAG, "getMessageList: js=" + js.toString());
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.SERACH_VIP_LIST, js);//WebUrl.UserManager.SEARCH_MSG_LIST
+        if (httpResult.hasError()) {
+            throw httpResult.getError();
+        }
+
+        return (new Gson()).fromJson(httpResult.jsonArray.toString(), new TypeToken<List<VipSearchListModel>>() {
+        }.getType());
+    }
+
+    /**
+     * 04-01注册
      *
      * @param context
      * @return
      * @throws MyException
      */
-    public static DetailModel getItemDetail(Context context, String clientid) throws MyException {
+    public static void postVipRegist(Context context, JSONObject js) throws MyException {
         if (!NetworkManager.isNetworkAvailable(context)) {
             throw new MyException(R.string.network_invalid);
         }
-
-        JSONObject js = new JSONObject();
-        try {
-            js.put("clientid", clientid);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, "getMessageList: js=" + js.toString());
-        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.ITEM_DETAIL, js);
+        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.POST_VIP_REG, js);
         if (httpResult.hasError()) {
             throw httpResult.getError();
         }
 
-        return (new Gson()).fromJson(httpResult.jsonObject.toString(), DetailModel.class);
-
     }
-
 }

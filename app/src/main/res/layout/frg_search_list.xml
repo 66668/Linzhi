@@ -94,16 +94,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="日期"
+                android:text="姓名"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_textSize_default16"/>
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="姓名"
+                android:text="性别"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_textSize_default16"/>
 

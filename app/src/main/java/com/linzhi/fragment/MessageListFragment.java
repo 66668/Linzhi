@@ -93,7 +93,6 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     private static final int SEARCH_MORE_FAILED = 18;
 
 
-
     //控件
     private MessageListAdapter adapter;
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
@@ -134,6 +133,10 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     public void initView(View view) {
         adapter = new MessageListAdapter(getActivity());
         listView.setAdapter(adapter);
+
+        //上拉下拉监听 实例
+        listView.setILoadMoreListener(this);
+        listView.setIRefreshListener(this);
     }
 
     private void initListener() {
@@ -302,9 +305,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     DetailModel model = UserHelper.getItemDetail(getActivity(), clientidDD);
                     handler.sendMessage(handler.obtainMessage(GET_DETAIL_SUCCESS, model));
 
-
                 } catch (MyException e) {
                     e.printStackTrace();
+                    Log.d(TAG, "run: error=" + e.toString());
                     handler.sendMessage(handler.obtainMessage(GET_DETAIL_FAILED, e.getMessage()));
                 }
             }
@@ -356,8 +359,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         minTime = "";
         maxTime = "";
 
-        adapter = new MessageListAdapter(getActivity());
-        listView.setAdapter(adapter);
+        //搜索成功再变初始化
+        //        adapter = new MessageListAdapter(getActivity());
+        //        listView.setAdapter(adapter);
     }
 
     //刷新 设置 初始化参数
@@ -401,6 +405,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     break;
 
                 case SEARCH_DETA_SUCCESS://搜索数据
+                    //重新初始化listView
+                    adapter = new MessageListAdapter(getActivity());
+                    listView.setAdapter(adapter);
 
                     listdate = (ArrayList<MessageListModel>) msg.obj;
                     setMaxTime(listdate.get(0));
@@ -425,15 +432,15 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     listView.loadAndFreshComplete();
                     break;
 
-                case  SEARCH_FRESH_FAILED:
+                case SEARCH_FRESH_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     listView.loadAndFreshComplete();
                     break;
-                case  SEARCH_MORE_FAILED:
+                case SEARCH_MORE_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     listView.loadAndFreshComplete();
                     break;
-                case  SEARCH_DETA_FAILED:
+                case SEARCH_DETA_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
                     listView.loadAndFreshComplete();
                     break;
