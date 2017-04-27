@@ -47,7 +47,7 @@
         </activity>
 
         <activity
-            android:name=".ChangeVipMessageActivity"
+            android:name=".VipUpdateActivity"
             android:screenOrientation="landscape">
         </activity>
     </application>

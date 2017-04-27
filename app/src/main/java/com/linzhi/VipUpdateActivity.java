@@ -1,7 +1,10 @@
 package com.linzhi;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,8 @@ import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.inject.ViewInject;
 import com.linzhi.model.DetailModel;
+import com.linzhi.utils.PageUtil;
+import com.linzhi.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +33,7 @@ import butterknife.ButterKnife;
  * Created by sjy on 2017/4/21.
  */
 
-public class ChangeVipMessageActivity extends BaseActivity {
+public class VipUpdateActivity extends BaseActivity {
     //back
     @ViewInject(id = R.id.layout_back, click = "forBack")
     RelativeLayout layout_back;
@@ -87,6 +92,7 @@ public class ChangeVipMessageActivity extends BaseActivity {
     @ViewInject(id = R.id.radioBtn_female)
     RadioButton radioBtn_female;
 
+    //变量
     private DetailModel model;
     private String name;
     private String gender;
@@ -94,6 +100,10 @@ public class ChangeVipMessageActivity extends BaseActivity {
     private String cardid;
     private String level;
     private String remark;
+
+    //常量
+    private static final int VIP_UPDATE_SUCCESS = 10;
+    private static final int VIP_UPDATE_FAILED = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,15 +164,11 @@ public class ChangeVipMessageActivity extends BaseActivity {
 
     }
 
-    //
-    public void forBack(View view) {
-        this.finish();
-    }
 
     /**
      * 客户等级
      */
-    private void initListener(){
+    private void initListener() {
 
         radiogroup_level.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -193,11 +199,20 @@ public class ChangeVipMessageActivity extends BaseActivity {
      */
     public void forChange(View view) {
         getInput();//获取输入内容
-        Log.d("SJY", "forChange: level=" + level);
+        if(!Utils.isPhoneLegal(phone)){
+            PageUtil.DisplayToast("请输入正确手机号");
+            return;
+        }
+        if(!TextUtils.isEmpty(cardid)){
+
+            if(!Utils.isIDCard(cardid)){
+                PageUtil.DisplayToast("请输入正确身份证号");
+                return;
+            }
+        }
         Loading.run(this, new Runnable() {
             @Override
             public void run() {
-                Log.d("SJY", "getMessageList: js=");
                 try {
                     JSONObject js = new JSONObject();
                     try {
@@ -213,13 +228,35 @@ public class ChangeVipMessageActivity extends BaseActivity {
                     }
                     Log.d("SJY", "getMessageList: js=" + js.toString());
                     UserHelper.postChangeVip(getApplicationContext(), js);
+                    handler.sendMessage(handler.obtainMessage(VIP_UPDATE_SUCCESS, "修改成功！"));
+
                 } catch (MyException e) {
                     e.printStackTrace();
                     Log.d("SJY", "run: error=" + e.toString());
+                    handler.sendMessage(handler.obtainMessage(VIP_UPDATE_FAILED, e.getMessage()));
                 }
             }
         });
     }
+
+    protected Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+
+                case VIP_UPDATE_SUCCESS:
+                    PageUtil.DisplayToast((String) msg.obj);
+                    VipUpdateActivity.this.finish();
+                    break;
+                case VIP_UPDATE_FAILED:
+                    PageUtil.DisplayToast((String) msg.obj);
+                    break;
+
+
+            }
+        }
+    };
 
     private void getInput() {
 
@@ -231,4 +268,15 @@ public class ChangeVipMessageActivity extends BaseActivity {
         gender = radiogroup_gender.getCheckedRadioButtonId() == R.id.radioBtn_male ? "1" : "2";//性别
         Log.d("SJY", "getInput: 获取修改数值");
     }
+
+    /**
+     * 退出
+     *
+     * @param view
+     */
+    public void forBack(View view) {
+        this.finish();
+    }
+
+
 }

@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.linzhi.ChangeVipMessageActivity;
+import com.linzhi.VipUpdateActivity;
 import com.linzhi.R;
 import com.linzhi.adapter.MessageListAdapter;
 import com.linzhi.base.BaseFragment;
@@ -483,7 +483,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
             @Override
             public void forSure() {
                 //修改
-                Intent intent = new Intent(getActivity(), ChangeVipMessageActivity.class);
+                Intent intent = new Intent(getActivity(), VipUpdateActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("DetailModel", model);
                 intent.putExtras(bundle);

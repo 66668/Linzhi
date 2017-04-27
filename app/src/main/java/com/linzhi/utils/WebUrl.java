@@ -16,7 +16,7 @@ public class WebUrl {
 
     //图片路径要使用
     public static String getURL() {
-        return "http://192.168.1.198:8080/YueVisionLzh/";
+        return LOGIN_URL+GEN+"/";
     }
 
     /**

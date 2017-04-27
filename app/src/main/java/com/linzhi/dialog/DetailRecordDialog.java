@@ -3,6 +3,7 @@ package com.linzhi.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +92,8 @@ public class DetailRecordDialog extends Dialog {
     public void setValue() {
         tv_name.setText(model.getClientName());
         tv_gender.setText(model.getClientGender());
-        tv_cardId.setText(model.getIDCardNo());
+        String cardNum = model.getIDCardNo();
+        tv_cardId.setText(TextUtils.isEmpty(cardNum) ? "无" : cardNum);
         tv_phone.setText(model.getClientPhone());
         tv_level.setText(model.getClientLevel());
         tv_remark.setText(model.getRemark());

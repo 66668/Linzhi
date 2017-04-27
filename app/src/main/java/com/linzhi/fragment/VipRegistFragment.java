@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -102,8 +104,10 @@ public class VipRegistFragment extends BaseFragment {
     private static final String TAG = "VipRegistFragment";
     private static final int REQUEST_CAMERA = 22;
     public static final int RESULT_OK = 23;
+    public static final int REGIST_SUCCESS = 24;
+    public static final int REGIST_FAILED = 25;
 
-    //变亮
+    //变量
     private String name;
     private String gender;
     private String phone;
@@ -175,11 +179,40 @@ public class VipRegistFragment extends BaseFragment {
                     }
                     Log.d(TAG, "getMessageList: js=" + js.toString());
                     UserHelper.postVipRegist(getActivity(), js);
+                    handler.sendMessage(handler.obtainMessage(REGIST_SUCCESS, "注册成功！"));
                 } catch (MyException e) {
                     e.printStackTrace();
+                    handler.sendMessage(handler.obtainMessage(REGIST_FAILED, e.getMessage()));
                 }
             }
         });
+    }
+
+    protected Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case REGIST_SUCCESS://
+                    PageUtil.DisplayToast((String) msg.obj);
+                    clean();//清空注册数据
+                    break;
+
+                case REGIST_FAILED:
+                    PageUtil.DisplayToast((String) msg.obj);
+                    break;
+
+            }
+        }
+    };
+
+    //注册成功，清空
+    private void clean() {
+        et_name.setText("");
+        et_phone.setText("");
+        et_cardid.setText("");
+        et_remark.setText("");
+        img.setImageBitmap(null);
     }
 
     private void getInput() {

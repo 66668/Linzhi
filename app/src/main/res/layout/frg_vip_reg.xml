@@ -202,35 +202,35 @@
                 android:textSize="@dimen/common_textSize_default14"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/bg_tv_color"/>
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/bg_tv_color"/>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/white">
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@android:color/white">-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="20dp"
-                android:text="@string/clientid"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_textSize_default14"/>
+        <!--<TextView-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:text="@string/clientid"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="@dimen/common_textSize_default14"/>-->
 
-            <EditText
-                android:id="@+id/et_clientid"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/et_reg_style"
-                android:gravity="center_vertical"
-                android:hint="@string/clientid_hint"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/common_textSize_default14"/>
-        </LinearLayout>
+        <!--<EditText-->
+        <!--android:id="@+id/et_clientid"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@drawable/et_reg_style"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:hint="@string/clientid_hint"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="@dimen/common_textSize_default14"/>-->
+        <!--</LinearLayout>-->
 
         <View
             android:layout_width="match_parent"
