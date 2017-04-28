@@ -79,6 +79,7 @@
             android:drawablePadding="20dp"
             android:gravity="center_vertical"
             android:hint="@string/hint_psd"
+            android:inputType="textPassword"
             android:textColor="@android:color/black"
             android:textSize="@dimen/common_textSize_default14"/>
 

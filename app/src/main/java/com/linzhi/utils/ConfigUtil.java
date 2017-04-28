@@ -23,19 +23,10 @@ public class ConfigUtil {
 	protected SharedPreferences.Editor editor;
 
 
-	private static final String STOREID = "storeId";//公司编号
-	private static final String WORKID = "workId";//工号
+	private static final String USERNAME = "userName";//工号
 	private static final String PSD = "password";//密码
-	
 	private static final String AUTO_LOGIN = "auto_login";
 	private static final String USERENTITY = "user_entity";
-	private static final String PUSH_CLIENTID = "push_clientId";//个推clientID
-
-	private static final String WIFINAME = "WIFI_NAME";//wifi名称
-	private static final String MACADRESS = "WIFI_MAXADRESS";//wifi的mac地址
-
-	private static final String CONTACT_APPROVER = "contactapprover";//保存审批人通讯录
-
 
 	//登录内容保存
 	@SuppressLint("CommitPrefEdits")
@@ -53,33 +44,9 @@ public class ConfigUtil {
 
 	//
 	public void resetConfig() {
-		setWorkId(null);
-		setStoreId("");
+		setUserName(null);
 		setAutoLogin(true);
 	}
-
-	//调用该方法，将值保存
-	public void put(String key, String value) {
-		editor.putString(key, value);
-		editor.commit();
-	}
-
-	//获取值，没有对应值返回""
-	public String get(String key) {
-		return sp.getString(key, "");
-	}
-
-	//保存boolean值
-	public void putBoolean(String key, Boolean value) {
-		editor.putBoolean(key, value);
-		editor.commit();
-	}
-
-	//返回boolean值，没有对应值，返回false
-	public Boolean getBoolean(String key) {
-		return sp.getBoolean(key, false);
-	}
-
 	/**
 	 * 将js转换成对象，需要调用外部jar包，
 	 * 获取所有当前用户的信息
@@ -103,6 +70,27 @@ public class ConfigUtil {
 		editor.commit();
 	}
 
+	//调用该方法，将值保存
+	public void put(String key, String value) {
+		editor.putString(key, value);
+		editor.commit();
+	}
+
+	//获取值，没有对应值返回""
+	public String get(String key) {
+		return sp.getString(key, "");
+	}
+
+	//
+	public String getUserName() {
+		return sp.getString(USERNAME, null);//userid
+	}
+	//登录名
+	public void setUserName(String id) {
+		editor.putString(USERNAME, id);
+		editor.commit();
+	}
+
 	//密码
 	public String getPassword() {
 		return sp.getString(PSD, null);
@@ -113,62 +101,13 @@ public class ConfigUtil {
 		editor.commit();
 	}
 
-	//工号
-	public String getWorkId() {
-		return sp.getString(WORKID, null);//userid
-	}
-
-	public void setWorkId(String id) {
-		editor.putString(WORKID, id);
-		editor.commit();
-	}
-
-	//公司编号
-	public String getStoreId() {
-		return sp.getString(STOREID, "");
-	}
-
-	public void setStoreId(String account) {
-		editor.putString(STOREID, account);
-		editor.commit();
-	}
-
 	//返回自动登录状态
 	public boolean getAutoLogin() {
 		return sp.getBoolean(AUTO_LOGIN, true);
 	}
 
-	public void setAutoLogin(boolean play) {
-		editor.putBoolean(AUTO_LOGIN, play);
-		editor.commit();
-	}
-
-	//个推ClientID
-
-	public String getPushClientid() {
-		return sp.getString(PUSH_CLIENTID, "");
-	}
-
-	public void setPushClientid(String pushClientid) {
-		editor.putString(PUSH_CLIENTID, pushClientid);
-		editor.commit();
-	}
-
-	//wifi名称
-	public String getWifiName(){
-		return sp.getString(WIFINAME,"");
-	}
-	public void setWifiName(String SSID){//wifi名称
-		editor.putString(WIFINAME,SSID);
-		editor.commit();
-	}
-
-	//wifi的mac
-	public String getMacAddress(){
-		return sp.getString(MACADRESS,"");
-	}
-	public void setMacAddress(String macAdress){
-		editor.putString(MACADRESS,macAdress);
+	public void setAutoLogin(boolean flag) {
+		editor.putBoolean(AUTO_LOGIN, flag);
 		editor.commit();
 	}
 

@@ -1,52 +1,47 @@
 package com.linzhi.db.entity;
 
 
-import android.util.ArrayMap;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class TableInfo implements Serializable {
-    /// <summary>
-    /// </summary>
-    public ArrayMap<String, ColumnInfo> Columns;
+/**
+ *
+ */
+public class TableBase implements Serializable {
 
+    public HashMap<String, ColumnInfo> tableMap;
     protected String _tableName;
 
-    /// <summary>
-    /// </summary>
     public String GetTableName() {
         return _tableName;
     }
 
-    public TableInfo() {
-        Columns = new ArrayMap<String, ColumnInfo>();
+    public TableBase() {
+        tableMap = new HashMap<String, ColumnInfo>();
     }
 
+    //添加一个对象
     public void Add(String columnName, ColumnInfo column) {
         SetColumnInfoByName(column, columnName);
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
+    //获取一个对象
     public ColumnInfo GetColumnInfoByName(String columnName) {
-        return Columns.get(columnName);
+        return tableMap.get(columnName);
     }
 
     public void SetColumnInfoByName(ColumnInfo value, String columnName) {
-        Columns.put(columnName, value);
+        tableMap.put(columnName, value);
     }
 
     protected ArrayList<ColumnInfo> _allColumnInfo;
 
-    /// <summary>
-    /// </summary>
+    //获取所有参数，将arraymap转成arrayList形式
     public ArrayList<ColumnInfo> GetAllColumnInfo() {
         if (_allColumnInfo == null) {
             _allColumnInfo = new ArrayList<ColumnInfo>();
-            for (ColumnInfo ci : Columns.values()) {
+            for (ColumnInfo ci : tableMap.values()) {
                 _allColumnInfo.add(ci);
             }
         }
@@ -56,13 +51,12 @@ public class TableInfo implements Serializable {
 
     protected ArrayList<String> _allColumnName;
 
-    /// <summary>
-    /// </summary>
+    //获取所有参数名，保存成arrayList
     public ArrayList<String> GetAllColumnName() {
 
         if (_allColumnName == null) {
             _allColumnName = new ArrayList<String>();
-            for (ColumnInfo ci : Columns.values()) {
+            for (ColumnInfo ci : tableMap.values()) {
                 _allColumnName.add(ci.ColumnName);
             }
         }
@@ -72,13 +66,12 @@ public class TableInfo implements Serializable {
 
     protected ArrayList<ColumnInfo> _keyColumnInfo;
 
-    /// <summary>
-    /// </summary>
+    //获取主键值，保存成arrayList
     public ArrayList<ColumnInfo> GetKeyColumnInfo() {
 
         if (_keyColumnInfo == null) {
             _keyColumnInfo = new ArrayList<ColumnInfo>();
-            for (ColumnInfo ci : Columns.values()) {
+            for (ColumnInfo ci : tableMap.values()) {
                 if (ci.IsPrimaryKey) {
                     _keyColumnInfo.add(ci);
                 }
@@ -90,12 +83,11 @@ public class TableInfo implements Serializable {
 
     protected ArrayList<ColumnInfo> _valueColumnInfo;
 
-    /// <summary>
-    /// </summary>
+    //获取非主键值，保存成arrayList
     public ArrayList<ColumnInfo> GetValueColumnInfo() {
         if (_valueColumnInfo == null) {
             _valueColumnInfo = new ArrayList<ColumnInfo>();
-            for (ColumnInfo ci : Columns.values()) {
+            for (ColumnInfo ci : tableMap.values()) {
                 if (!ci.IsPrimaryKey) {
                     _valueColumnInfo.add(ci);
                 }

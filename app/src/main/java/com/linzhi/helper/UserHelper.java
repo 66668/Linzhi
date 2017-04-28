@@ -37,7 +37,6 @@ import java.util.List;
 public class UserHelper<T> {
     private static final String TAG = "SJY";
     static UserEntity mCurrentUser = null;
-    static String configUserManager = null;
 
     /**
      * (2)获取用户账号
@@ -54,7 +53,7 @@ public class UserHelper<T> {
         if (mCurrentUser == null && isAutoLoad) {// 判断MemberModel类是否为空
             // 中断保存
             ConfigUtil config = new ConfigUtil(MyApplication.getInstance());// 中断保存获取信息
-            String workId = config.getWorkId();
+            String workId = config.getUserName();
             if (!"".equals(workId)) {
                 // 获取所有当前用户信息，保存到mCurrentUser对象中
                 mCurrentUser = config.getUserEntity();
@@ -97,7 +96,7 @@ public class UserHelper<T> {
 
         // ConfigUtil中断保存，在退出后重新登录用getAccount()调用
         ConfigUtil config = new ConfigUtil(MyApplication.getInstance());
-        config.setWorkId(userName);
+        config.setUserName(userName);
         config.setPassword(password);
         config.setAutoLogin(true);
         config.setUserEntity(uEntity);// 保存已经登录成功的对象信息

@@ -18,6 +18,7 @@ import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.inject.ViewInject;
 import com.linzhi.model.SiteIDModel;
+import com.linzhi.utils.ConfigUtil;
 import com.linzhi.utils.PageUtil;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(id = R.id.tv_psd)
     EditText tv_psd;
 
-    @ViewInject(id = R.id.btn_login,click = "toLogin")
+    @ViewInject(id = R.id.btn_login, click = "toLogin")
     Button btn_login;
 
     //变量
@@ -60,6 +61,10 @@ public class LoginActivity extends BaseActivity {
         getSiteIDDate();
         initListener();
 
+        //中断保存 获取缓存
+        ConfigUtil configUtil = new ConfigUtil(getApplicationContext());
+        tv_userName.setText(configUtil.getUserName());
+        tv_psd.setText(configUtil.getPassword());
     }
 
 
@@ -114,10 +119,15 @@ public class LoginActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * 登录
+     *
+     * @param view
+     */
     public void toLogin(View view) {
         //        siteID = tv_SiteID.getText().toString().trim();
-        userName = "aaa";//tv_userName.getText().toString().trim();// aaa
-        passWord = "111";//tv_psd.getText().toString().trim();//123
+        userName = tv_userName.getText().toString().trim();// aaa
+        passWord = tv_psd.getText().toString().trim();//123
 
         //非空判断
         if (!isEmpty()) {
@@ -138,7 +148,6 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         });
-
     }
 
     @Override
