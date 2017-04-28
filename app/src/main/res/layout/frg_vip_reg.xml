@@ -105,11 +105,9 @@
                 android:id="@+id/radiogroup_gender"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
                 android:layout_weight="0.66"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
                 android:singleLine="true"
                 android:weightSum="1">
 
@@ -255,11 +253,9 @@
                 android:id="@+id/radiogroup_level"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
                 android:layout_weight="0.66"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
                 android:singleLine="true"
                 android:weightSum="1">
 
