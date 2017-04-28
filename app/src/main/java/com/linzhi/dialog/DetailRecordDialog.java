@@ -1,12 +1,15 @@
 package com.linzhi.dialog;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 import com.linzhi.R;
 import com.linzhi.common.ImageLoadingConfig;
 import com.linzhi.model.DetailModel;
+import com.linzhi.utils.AppCommonUtils;
+import com.linzhi.utils.DpUtils;
 import com.linzhi.utils.WebUrl;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,7 +28,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  * Created by sjy on 2017/4/14.
  */
 
-public class DetailRecordDialog extends Dialog {
+public class DetailRecordDialog extends AlertDialog {//AlertDialog和Dialog两种继承
 
     private final String TAG = "SJY";
     //变量
@@ -68,12 +73,14 @@ public class DetailRecordDialog extends Dialog {
 
     public void init() {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.record_dialog_detail, null);
+        View view = inflater.inflate(R.layout.dialog_detail, null);
         setContentView(view);
 
         imgLoader = ImageLoader.getInstance();
         imgLoader.init(ImageLoaderConfiguration.createDefault(context));
+        //加载不出图片，显示默认的图片
         imgOptions = ImageLoadingConfig.generateDisplayImageOptions(R.mipmap.default_photo);
+
         //初始化
         tv_name = (TextView) view.findViewById(R.id.tv_name);
         tv_gender = (TextView) view.findViewById(R.id.tv_gender);
@@ -89,15 +96,25 @@ public class DetailRecordDialog extends Dialog {
         //
     }
 
+    //显示
     public void setValue() {
+
+        //参数
         tv_name.setText(model.getClientName());
-        tv_gender.setText(model.getClientGender());
+        if ((model.getClientGender()).contains("1")) {
+            tv_gender.setText("男");
+        } else if ((model.getClientGender()).contains("2")) {
+            tv_gender.setText("女");
+
+        } else {
+            tv_gender.setText(model.getClientGender());
+        }
+
         String cardNum = model.getIDCardNo();
         tv_cardId.setText(TextUtils.isEmpty(cardNum) ? "无" : cardNum);
         tv_phone.setText(model.getClientPhone());
-        tv_level.setText(model.getClientLevel());
+        tv_level.setText(AppCommonUtils.getTransLevel(model.getClientLevel()));
         tv_remark.setText(model.getRemark());
-
         String url = WebUrl.getURL() + model.getImgPath();
         Log.d(TAG, "setValue: 图片路径：" + url);
         imgLoader.displayImage(url, img, imgOptions);
@@ -105,12 +122,13 @@ public class DetailRecordDialog extends Dialog {
         btn_cancel.setOnClickListener(new ClickListener());
         btn_sure.setOnClickListener(new ClickListener());
 
-        //弹窗大小
-        //        Window dialogWindow = getWindow();
-        //        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        //        DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
-        //        lp.width = (int) (d.widthPixels * 0.8); // 高度设置为屏幕的0.6
-        //        dialogWindow.setAttributes(lp);
+        //弹窗大小,代码设置
+        Window dialogWindow = getWindow();
+        WindowManager.LayoutParams layoutParams = dialogWindow.getAttributes();
+        DisplayMetrics d = context.getResources().getDisplayMetrics();
+        layoutParams.width = DpUtils.dp2px(context, 430); // 宽430dp
+        layoutParams.height = DpUtils.dp2px(context, 525); // 高525dp
+        dialogWindow.setAttributes(layoutParams);
 
     }
 

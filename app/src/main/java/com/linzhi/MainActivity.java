@@ -1,12 +1,16 @@
 package com.linzhi;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,10 +18,11 @@ import android.widget.TextView;
 import com.linzhi.base.BaseActivity;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.fragment.MessageListFragment;
-import com.linzhi.fragment.VipSearchFragment;
 import com.linzhi.fragment.VipRegistFragment;
+import com.linzhi.fragment.VipSearchFragment;
 import com.linzhi.inject.ViewInject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +33,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 
     //退出
-    @ViewInject(id = R.id.tv_quit,click = "toQuit")
+    @ViewInject(id = R.id.tv_quit, click = "toQuit")
     TextView tv_quit;
 
 
@@ -67,7 +72,19 @@ public class MainActivity extends BaseActivity {
 
         initFragment();
         initListener();
+        text();
 
+    }
+
+    private void text() {
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int width = metric.widthPixels;
+        int hight = metric.heightPixels;
+        float density = metric.density;
+        float densityDpi = metric.densityDpi;
+        final float scale = getResources().getDisplayMetrics().density;
+        Log.d(TAG, "dp宽=" + (width / density) + "--dp高=" + (hight / density) + "--densityDpi=" + densityDpi + "--density=" + density + "--densityDpi=" + densityDpi+"--scale"+scale);
     }
 
     private void initFragment() {
@@ -160,11 +177,57 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        fixInputMethodManagerLeak(getApplicationContext());
     }
 
     public void toQuit(View view) {
         Intent intent = new Intent();
         intent.setAction(EXIT_APP_ACTION);
         sendBroadcast(intent);//发送退出的广播
+    }
+
+    //
+    public static void fixInputMethodManagerLeak(Context context) {
+        if (context == null) {
+            return;
+        }
+        try {
+            // 对 mCurRootView mServedView mNextServedView 进行置空...
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm == null) {
+                return;
+            }// author:sodino mail:sodino@qq.com
+
+            Object obj_get = null;
+            Field f_mCurRootView = imm.getClass().getDeclaredField("mCurRootView");
+            Field f_mServedView = imm.getClass().getDeclaredField("mServedView");
+            Field f_mNextServedView = imm.getClass().getDeclaredField("mNextServedView");
+
+            if (f_mCurRootView.isAccessible() == false) {
+                f_mCurRootView.setAccessible(true);
+            }
+            obj_get = f_mCurRootView.get(imm);
+            if (obj_get != null) { // 不为null则置为空
+                f_mCurRootView.set(imm, null);
+            }
+
+            if (f_mServedView.isAccessible() == false) {
+                f_mServedView.setAccessible(true);
+            }
+            obj_get = f_mServedView.get(imm);
+            if (obj_get != null) { // 不为null则置为空
+                f_mServedView.set(imm, null);
+            }
+
+            if (f_mNextServedView.isAccessible() == false) {
+                f_mNextServedView.setAccessible(true);
+            }
+            obj_get = f_mNextServedView.get(imm);
+            if (obj_get != null) { // 不为null则置为空
+                f_mNextServedView.set(imm, null);
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 }

@@ -17,8 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="24dp"
-            android:background="@mipmap/ic_launcher"/>
+            android:layout_marginLeft="24dp"/>
 
         <TextView
             android:id="@+id/tv_quit"

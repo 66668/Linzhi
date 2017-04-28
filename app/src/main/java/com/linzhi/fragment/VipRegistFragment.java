@@ -145,6 +145,7 @@ public class VipRegistFragment extends BaseFragment {
     @OnClick(R.id.btn_signin)
     public void btn_signin() {
         getInput();//获取输入内容
+        final String base64 = ImageUtils.imgToBase64(null, picbitmap);
         if (isEmpty()) {
             return;
         }
@@ -159,12 +160,15 @@ public class VipRegistFragment extends BaseFragment {
                 return;
             }
         }
-
+        if (base64 == null) {
+            PageUtil.DisplayToast("请选择相机拍照");
+            return;
+        }
         Loading.run(getActivity(), new Runnable() {
             @Override
             public void run() {
                 try {
-                    String base64 = ImageUtils.imgToBase64(null, picbitmap);
+
                     JSONObject js = new JSONObject();
                     try {
                         js.put("image", base64);

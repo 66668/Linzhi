@@ -2,6 +2,7 @@ package com.linzhi.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,8 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.linzhi.VipUpdateActivity;
 import com.linzhi.R;
+import com.linzhi.VipUpdateActivity;
 import com.linzhi.adapter.MessageListAdapter;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
@@ -441,6 +442,8 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     listView.loadAndFreshComplete();
                     break;
                 case SEARCH_DETA_FAILED:
+                    adapter = new MessageListAdapter(getActivity());
+                    listView.setAdapter(adapter);
                     PageUtil.DisplayToast((String) msg.obj);
                     listView.loadAndFreshComplete();
                     break;
@@ -522,6 +525,12 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                 android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 mDateSetListener,
                 year, month, day);
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                tv_time.setText("");
+            }
+        });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 

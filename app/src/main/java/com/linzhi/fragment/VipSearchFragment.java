@@ -74,7 +74,7 @@ public class VipSearchFragment extends BaseFragment {
     private static final int SEARCH_DETAILE_SUCCESS = 12;
     private static final int SEARCH_DETAILE_FAILED = 13;
     // 会员列表数据 等级依次是1--5
-    private String[] popContents = new String[]{"钻石会员", "铂金会员", "黄金会员", "白银会员", "普通会员"};
+    private String[] popContents = new String[]{"钻石会员", "铂金会员", "黄金会员", "白银会员", "普通会员", "无"};
 
     //单例模式
     public static VipSearchFragment newInstance() {
@@ -195,7 +195,7 @@ public class VipSearchFragment extends BaseFragment {
                     PageUtil.DisplayToast((String) msg.obj);
                     break;
                 case SEARCH_DETAILE_SUCCESS://
-                    DetailModel model=(DetailModel) msg.obj;
+                    DetailModel model = (DetailModel) msg.obj;
                     dialogShow(model);
                     break;
 
@@ -234,6 +234,7 @@ public class VipSearchFragment extends BaseFragment {
             }
         });
     }
+
     @Override
     public String getFragmentName() {
         return TAG;
@@ -300,11 +301,17 @@ public class VipSearchFragment extends BaseFragment {
         // 当listView受到点击时替换mTextView当前显示文本
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                tv_level.setText(popContents[arg2]);
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                Log.d(TAG, "onItemClick: position=" + position + "popContents.length=" + popContents.length);
+
+                if (position == popContents.length - 1) {
+                    tv_level.setText("");
+                } else {
+                    tv_level.setText(popContents[position]);
+                }
                 popupWindow.dismiss();
-                String str = popContents[arg2];
+                String str = popContents[position];
                 levelNum = AppCommonUtils.getLevelNum(str);
             }
         });

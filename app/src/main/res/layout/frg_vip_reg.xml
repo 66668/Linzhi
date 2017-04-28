@@ -11,7 +11,7 @@
         android:background="@color/bg_tv_color"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
-        android:text="VIP客户添加"
+        android:text="@string/vip_reg"
         android:textSize="@dimen/common_textSize_default18"/>
 
     <TextView

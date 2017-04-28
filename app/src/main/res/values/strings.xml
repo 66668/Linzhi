@@ -14,12 +14,12 @@
     <string name="vip_reg">VIP注册</string>
 
     <!-- reg-->
-    <string name="name">姓名</string>
-    <string name="gender">性别</string>
-    <string name="phone">电话</string>
-    <string name="cardId">身份证号</string>
-    <string name="level">客户等级</string>
-    <string name="remark">备注信息</string>
+    <string name="name">姓   名:</string>
+    <string name="gender">性   别:</string>
+    <string name="phone">电   话:</string>
+    <string name="cardId">身份证号:</string>
+    <string name="level">客户等级:</string>
+    <string name="remark">备注信息:</string>
     <string name="signin">提 交</string>
     <string name="clientid">客户号</string>
     <string name="clientid_hint">请输入客户号</string>
