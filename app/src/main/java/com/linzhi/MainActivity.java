@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity {
         initListener();
         text();
 
+
     }
 
     private void text() {
@@ -178,6 +179,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         fixInputMethodManagerLeak(getApplicationContext());
+
     }
 
     public void toQuit(View view) {
@@ -230,4 +232,5 @@ public class MainActivity extends BaseActivity {
             t.printStackTrace();
         }
     }
+
 }
