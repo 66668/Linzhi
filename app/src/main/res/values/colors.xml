@@ -18,5 +18,5 @@
     <color name="searchcolor_bg">#bbbbbb</color>
     <!-- reg-->
     <color name="bg_tv_color">#bbbbbb</color>
-
+    <color name="bar_line">#bbbbbb</color>
 </resources>

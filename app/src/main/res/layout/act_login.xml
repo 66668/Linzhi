@@ -17,13 +17,14 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="170dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:layout_marginTop="36dp"
-            android:background="@android:color/holo_blue_bright"/>
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/logo"/>
         <LinearLayout
             android:id="@+id/layout_siteid"
             android:layout_below="@+id/img"

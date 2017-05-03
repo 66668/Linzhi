@@ -3,11 +3,14 @@ package com.linzhi.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -20,8 +23,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.linzhi.MainActivity;
-import com.linzhi.MyChangeCameraActivity;
 import com.linzhi.R;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
@@ -35,10 +36,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -102,8 +108,8 @@ public class VipRegistFragment extends BaseFragment {
 
     //常量
     private static final String TAG = "VipRegistFragment";
-    private static final int REQUEST_CAMERA = 22;
-    public static final int RESULT_OK = 23;
+    private static final int REQUEST_CAMERA_1 = 21;
+
     public static final int REGIST_SUCCESS = 24;
     public static final int REGIST_FAILED = 25;
 
@@ -117,6 +123,7 @@ public class VipRegistFragment extends BaseFragment {
     private File picPath = null;
     private Point mPoint;//获取屏幕像素尺寸
     private Bitmap picbitmap;
+    private String mFilePath;//图片指定路径
 
 
     //单例模式
@@ -217,6 +224,7 @@ public class VipRegistFragment extends BaseFragment {
         et_cardid.setText("");
         et_remark.setText("");
         img.setImageBitmap(null);
+        img.setBackground(getResources().getDrawable(R.mipmap.vip_default_photo, null));
     }
 
     private void getInput() {
@@ -273,28 +281,42 @@ public class VipRegistFragment extends BaseFragment {
      */
     @OnClick(R.id.img)
     public void toShot() {
-        //自定义相机2
-        Intent mCameraIntent = new Intent((MainActivity) getActivity(), MyChangeCameraActivity.class);
-        startActivityForResult(mCameraIntent, REQUEST_CAMERA);
+
+        mFilePath = Environment.getExternalStorageDirectory().getPath();// 获取SD卡路径
+        mFilePath = mFilePath + "/" + "temp.png";// 指定路径
         //系统相机调用
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// 启动系统相机
+        Uri photoUri = Uri.fromFile(new File(mFilePath)); // 传递路径
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);// 更改系统默认存储路径
+        startActivityForResult(intent, REQUEST_CAMERA_1);
     }
 
     //拍照回调
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK)
-            return;
 
-        if (requestCode == REQUEST_CAMERA) {
-            Uri photoUri = data.getData();
-            Log.d(TAG, "onActivityResult: photoUri==null:" + (photoUri == null));
-
-            picPath = new File(ImageUtils.getImageAbsolutePath(getActivity(), photoUri));
-            //            picPath = new File(photoUri.toString());
-            // Get the bitmap in according to the width of the device
-
-            picbitmap = ImageUtils.decodeSampledBitmapFromPath(photoUri.getPath(), mPoint.x, mPoint.x);//获取的图片
-            img.setImageBitmap(picbitmap);
+        if (resultCode == RESULT_OK) { // 如果返回数据
+            if (requestCode == REQUEST_CAMERA_1) {
+                Log.d(TAG, "onActivityResult: 返回回调");
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(mFilePath); // 根据路径获取数据
+                    Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                    if(bitmap!=null){
+                        picbitmap = bitmap;
+                        img.setBackground(null);
+                        img.setImageBitmap(bitmap);// 显示图片
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        fis.close();// 关闭流
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

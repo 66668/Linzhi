@@ -32,7 +32,7 @@
         android:layout_below="@+id/vipadd"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/addpic"
-        android:background="@mipmap/default_photo"/>
+        android:background="@mipmap/vip_default_photo"/>
 
     <TextView
         android:id="@+id/tv_mind"
