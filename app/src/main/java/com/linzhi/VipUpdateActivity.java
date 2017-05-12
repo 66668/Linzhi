@@ -116,6 +116,7 @@ public class VipUpdateActivity extends BaseActivity {
 
     //
     private void initMyView() {
+        tv_title.setText("详情修改");
         tv_right.setText("");
         Bundle bundle = this.getIntent().getExtras();
         model = (DetailModel) bundle.getSerializable("DetailModel");
@@ -199,13 +200,13 @@ public class VipUpdateActivity extends BaseActivity {
      */
     public void forChange(View view) {
         getInput();//获取输入内容
-        if(!Utils.isPhoneLegal(phone)){
+        if (!Utils.isPhoneLegal(phone)) {
             PageUtil.DisplayToast("请输入正确手机号");
             return;
         }
-        if(!TextUtils.isEmpty(cardid)){
+        if (!TextUtils.isEmpty(cardid)) {
 
-            if(!Utils.isIDCard(cardid)){
+            if (!Utils.isIDCard(cardid)) {
                 PageUtil.DisplayToast("请输入正确身份证号");
                 return;
             }

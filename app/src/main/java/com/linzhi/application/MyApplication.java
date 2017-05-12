@@ -12,7 +12,6 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,11 +47,6 @@ public class MyApplication extends Application {
 
 		//图片缓存初始化设置
 		initImageLoader(this);
-
-		if (LeakCanary.isInAnalyzerProcess(this)) {
-			return;
-		}
-		LeakCanary.install(this);
 	}
 
 	private void initImageLoader(Context context) {

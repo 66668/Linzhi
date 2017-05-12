@@ -6,7 +6,8 @@ public class WebUrl {
      * 根接口
      */
     // 云端
-    private static final String LOGIN_URL = "http://192.168.1.227:8080";//192.168.1.111:8080/YueVisionLzh/Select/site
+    private static final String LOGIN_URL = "http://192.168.1.111:8080";//192.168.1.111:8080/YueVisionLzh/Select/site
+//    private static final String LOGIN_URL = "http://192.168.1.227:8080";//我的主机
 
 
     /**
