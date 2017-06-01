@@ -1,6 +1,7 @@
 package com.linzhi.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 详情model
@@ -9,16 +10,47 @@ import java.io.Serializable;
 
 public class DetailModel implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String ClientID;
-    private String ClientName;
-    private String ClientGender;
+    private String clientID;
+    private String clientName;
+    private String clientGender;
     private String IDCardNo;
-    private String ClientLevel;
-    private String Remark;
-    private String ActiveFlag;
-    private String CreateTime;
-    private String ImgPath;
+    private String clientLevel;
+    private String remark;
+    private String activeFlag;
+    private String createTime;
     private String clientPhone;
+    private String imgPath;
+    private List<CarModel> carNumList;
+
+    public List<CarModel> getCarNumList() {
+        return carNumList;
+    }
+
+    public void setCarNumList(List<CarModel> carNumList) {
+        this.carNumList = carNumList;
+    }
+
+    public class CarModel implements Serializable {
+        private static final long serialVersionUID = 2L;
+        private String infoID;
+        private String carNum;
+
+        public String getInfoID() {
+            return infoID;
+        }
+
+        public void setInfoID(String infoID) {
+            this.infoID = infoID;
+        }
+
+        public String getCarNum() {
+            return carNum;
+        }
+
+        public void setCarNum(String carNum) {
+            this.carNum = carNum;
+        }
+    }
 
     public String getClientPhone() {
         return clientPhone;
@@ -33,27 +65,27 @@ public class DetailModel implements Serializable {
     }
 
     public String getClientID() {
-        return ClientID;
+        return clientID;
     }
 
     public void setClientID(String clientID) {
-        ClientID = clientID;
+        this.clientID = clientID;
     }
 
     public String getClientName() {
-        return ClientName;
+        return clientName;
     }
 
     public void setClientName(String clientName) {
-        ClientName = clientName;
+        this.clientName = clientName;
     }
 
     public String getClientGender() {
-        return ClientGender;
+        return clientGender;
     }
 
     public void setClientGender(String clientGender) {
-        ClientGender = clientGender;
+        this.clientGender = clientGender;
     }
 
     public String getIDCardNo() {
@@ -65,42 +97,42 @@ public class DetailModel implements Serializable {
     }
 
     public String getClientLevel() {
-        return ClientLevel;
+        return clientLevel;
     }
 
     public void setClientLevel(String clientLevel) {
-        ClientLevel = clientLevel;
+        this.clientLevel = clientLevel;
     }
 
     public String getRemark() {
-        return Remark;
+        return remark;
     }
 
     public void setRemark(String remark) {
-        Remark = remark;
+        this.remark = remark;
     }
 
     public String getActiveFlag() {
-        return ActiveFlag;
+        return activeFlag;
     }
 
     public void setActiveFlag(String activeFlag) {
-        ActiveFlag = activeFlag;
+        this.activeFlag = activeFlag;
     }
 
     public String getCreateTime() {
-        return CreateTime;
+        return createTime;
     }
 
     public void setCreateTime(String createTime) {
-        CreateTime = createTime;
+        this.createTime = createTime;
     }
 
     public String getImgPath() {
-        return ImgPath;
+        return imgPath;
     }
 
     public void setImgPath(String imgPath) {
-        ImgPath = imgPath;
+        this.imgPath = imgPath;
     }
 }

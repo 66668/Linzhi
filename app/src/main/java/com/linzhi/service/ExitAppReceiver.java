@@ -1,4 +1,4 @@
-package com.linzhi.receiver;
+package com.linzhi.service;
 
 import android.app.Activity;
 import android.app.Service;

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.linzhi.R;
 import com.linzhi.model.MessageListModel;
+import com.linzhi.utils.AppCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -30,6 +31,7 @@ public class MessageListAdapter extends BaseAdapter {
         public TextView tv_time;
         public TextView tv_name;
         public TextView tv_level;
+        public TextView tv_car;
     }
 
     public MessageListAdapter(Context context) {
@@ -89,6 +91,7 @@ public class MessageListAdapter extends BaseAdapter {
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             holder.tv_level = (TextView) convertView.findViewById(R.id.tv_level);
             holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+            holder.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             convertView.setTag(holder);
         } else {
             holder = (WidgetHolder) convertView.getTag();
@@ -97,7 +100,11 @@ public class MessageListAdapter extends BaseAdapter {
         MessageListModel model = (MessageListModel) entityList.get(position);
         holder.tv_name.setText(model.getName());
         holder.tv_time.setText(model.getTime());
-        holder.tv_level.setText(model.getClientLevel());
+        holder.tv_car.setText(model.getRemake());
+
+        String levelName = AppCommonUtils.getTransLevel(model.getClientLevel());
+        holder.tv_level.setText(levelName);
+
         return convertView;
     }
 }

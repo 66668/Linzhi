@@ -8,21 +8,30 @@ import java.io.Serializable;
 
 public class MessageListModel implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String clientId;
+    private String clientID;
     private String name;
     private String time;
     private String clientLevel;
+    private String remake;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
+    public String getRemake() {
+        return remake;
+    }
+
+    public void setRemake(String remake) {
+        this.remake = remake;
+    }
+
     public String getClientId() {
-        return clientId;
+        return clientID;
     }
 
     public void setClientId(String clientId) {
-        this.clientId = clientId;
+        this.clientID = clientId;
     }
 
     public String getName() {

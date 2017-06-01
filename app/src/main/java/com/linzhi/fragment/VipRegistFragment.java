@@ -69,6 +69,10 @@ public class VipRegistFragment extends BaseFragment {
     @BindView(R.id.et_cardid)
     EditText et_cardid;
 
+    //车牌
+    @BindView(R.id.et_carNum)
+    EditText et_carNum;
+
     //备注
     @BindView(R.id.et_remark)
     EditText et_remark;
@@ -106,6 +110,10 @@ public class VipRegistFragment extends BaseFragment {
     @BindView(R.id.btn_signin)
     Button btn_signin;
 
+    //清空
+    @BindView(R.id.btn_clear)
+    Button btn_clear;
+
     //常量
     private static final String TAG = "VipRegistFragment";
     private static final int REQUEST_CAMERA_1 = 21;
@@ -115,6 +123,7 @@ public class VipRegistFragment extends BaseFragment {
 
     //变量
     private String name;
+    private String carNun;
     private String gender;
     private String phone;
     private String cardid;
@@ -144,6 +153,14 @@ public class VipRegistFragment extends BaseFragment {
         mPoint = new Point();
         display.getSize(mPoint);
         return view;
+    }
+
+    /**
+     * 清空
+     */
+    @OnClick(R.id.btn_clear)
+    public void btn_clear() {
+        clean();
     }
 
     /**
@@ -184,6 +201,7 @@ public class VipRegistFragment extends BaseFragment {
                         js.put("gender", gender);
                         js.put("IDCardNo", cardid);
                         js.put("clientPhone", phone);
+                        js.put("carNum", carNun);
                         js.put("level", level);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -217,23 +235,31 @@ public class VipRegistFragment extends BaseFragment {
         }
     };
 
-    //注册成功，清空
-    private void clean() {
-        et_name.setText("");
-        et_phone.setText("");
-        et_cardid.setText("");
-        et_remark.setText("");
-        img.setImageBitmap(null);
-        img.setBackground(getResources().getDrawable(R.mipmap.vip_default_photo, null));
-    }
 
     private void getInput() {
+        carNun = et_carNum.getText().toString();
         name = et_name.getText().toString();
         phone = et_phone.getText().toString();
         cardid = et_cardid.getText().toString();
         phone = et_phone.getText().toString();
         remark = et_remark.getText().toString();
-        gender = radiogroup_gender.getCheckedRadioButtonId() == R.id.radioBtn_male ? "1" : "2";//性别
+    }
+
+    /**
+     * 性别
+     */
+
+    @OnClick({R.id.radioBtn_male, R.id.radioBtn_female})
+    public void getGender(View view) {
+        switch (view.getId()) {
+            case R.id.radioBtn_male:
+                gender = "1";
+                break;
+            case R.id.radioBtn_female:
+                gender = "2";
+                break;
+        }
+
     }
 
     /**
@@ -302,7 +328,7 @@ public class VipRegistFragment extends BaseFragment {
                 try {
                     fis = new FileInputStream(mFilePath); // 根据路径获取数据
                     Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                    if(bitmap!=null){
+                    if (bitmap != null) {
                         picbitmap = bitmap;
                         img.setBackground(null);
                         img.setImageBitmap(bitmap);// 显示图片
@@ -351,6 +377,58 @@ public class VipRegistFragment extends BaseFragment {
     @Override
     protected String setFragmentName() {
         return null;
+    }
+
+    //清空
+    private void clean() {
+        Log.d(TAG, "clean: level=" + level + "--gender=" + gender);
+        //清空文本
+        et_name.setText("");
+        et_phone.setText("");
+        et_cardid.setText("");
+        et_remark.setText("");
+        et_carNum.setText("");
+
+        //清空图片
+        picbitmap = null;
+        img.setImageBitmap(null);
+        img.setBackground(getResources().getDrawable(R.mipmap.vip_default_photo, null));
+
+        //清空checkBox
+        if (!TextUtils.isEmpty(level)) {
+            switch (level) {
+                case "1":
+                    radioBtn_level1.setChecked(false);
+                    break;
+                case "2":
+                    radioBtn_level2.setChecked(false);
+                    break;
+                case "3":
+                    radioBtn_level3.setChecked(false);
+                    break;
+                case "4":
+                    radioBtn_level4.setChecked(false);
+                    break;
+                case "5":
+                    radioBtn_level5.setChecked(false);
+                    break;
+            }
+            level = null;
+        }
+        if (!TextUtils.isEmpty(gender)) {
+            switch (gender) {
+                case "1":
+                    radioBtn_male.setChecked(false);
+                    break;
+
+                case "2":
+                    radioBtn_female.setChecked(false);
+                    break;
+            }
+            gender = null;
+        }
+
+
     }
 
     //重写setMenuVisibility方法，不然会出现叠层的现象

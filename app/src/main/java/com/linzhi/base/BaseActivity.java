@@ -14,7 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.linzhi.helper.ActivityInjectHelper;
 import com.linzhi.helper.InjectHelper;
-import com.linzhi.receiver.ExitAppReceiver;
+import com.linzhi.service.ExitAppReceiver;
 import com.linzhi.utils.PageUtil;
 
 

@@ -19,13 +19,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.linzhi.R;
-import com.linzhi.VipUpdateActivity;
+import com.linzhi.UpdateDetailActivity;
 import com.linzhi.adapter.MessageListAdapter;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
-import com.linzhi.dialog.DetailRecordDialog;
 import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.model.DetailModel;
@@ -149,7 +147,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                 int newPosition = position - headerViewsCount;//得到新的修正后的position
 
                 MessageListModel model = (MessageListModel) adapter.getItem(newPosition);//
-                getItemDetail(model.getClientId());
+                String clientid = model.getClientId();
+                Log.d(TAG, "onItemClick: clientid=" + clientid);
+                getItemDetail(clientid);
             }
         });
     }
@@ -464,7 +464,14 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
 
                 case GET_DETAIL_SUCCESS:
                     model = (DetailModel) msg.obj;
-                    dialogShow(model);
+                    //跳转界面显示vip详情
+                    Intent intent = new Intent(getActivity(), UpdateDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("DetailModel", model);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                    //                    dialogShow(model);
                     break;
                 case GET_DETAIL_FAILED:
                     PageUtil.DisplayToast((String) msg.obj);
@@ -473,33 +480,33 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         }
     };
 
-    /**
-     * 弹窗现实详情
-     */
-    private void dialogShow(final DetailModel model) {
-        Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
-
-
-        final DetailRecordDialog dialog = new DetailRecordDialog(getActivity(), model);
-        dialog.show();
-        dialog.setClicklistener(new DetailRecordDialog.ClickListenerInterface() {
-            @Override
-            public void forSure() {
-                //修改
-                Intent intent = new Intent(getActivity(), VipUpdateActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("DetailModel", model);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-
-            @Override
-            public void forCancel() {
-                dialog.dismiss();
-            }
-        });
-    }
+    //    /**
+    //     * 弹窗现实详情
+    //     */
+    //    private void dialogShow(final DetailModel model) {
+    //        Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
+    //
+    //
+    //        final DetailRecordDialog dialog = new DetailRecordDialog(getActivity(), model);
+    //        dialog.show();
+    //        dialog.setClicklistener(new DetailRecordDialog.ClickListenerInterface() {
+    //            @Override
+    //            public void forSure() {
+    //                //修改
+    //                Intent intent = new Intent(getActivity(), VipUpdateActivity.class);
+    //                Bundle bundle = new Bundle();
+    //                bundle.putSerializable("DetailModel", model);
+    //                intent.putExtras(bundle);
+    //                startActivity(intent);
+    //                dialog.dismiss();
+    //            }
+    //
+    //            @Override
+    //            public void forCancel() {
+    //                dialog.dismiss();
+    //            }
+    //        });
+    //    }
 
     //赋值
     private void setMaxTime(MessageListModel model) {

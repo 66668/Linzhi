@@ -93,11 +93,14 @@ public class UserHelper<T> {
         //登录信息保存
         uEntity.setUserName(userName);
         uEntity.setPassword(password);
+        uEntity.setSiteID(siteID);
 
         // ConfigUtil中断保存，在退出后重新登录用getAccount()调用
         ConfigUtil config = new ConfigUtil(MyApplication.getInstance());
         config.setUserName(userName);
         config.setPassword(password);
+        config.setSiteID(siteID);
+
         config.setAutoLogin(true);
         config.setUserEntity(uEntity);// 保存已经登录成功的对象信息
         mCurrentUser = uEntity;// 将登陆成功的对象信息，赋值给全局变量
@@ -141,6 +144,7 @@ public class UserHelper<T> {
         try {
             js.put("maxtime", maxtTime);
             js.put("mintime", minTime);
+            js.put("siteID", UserHelper.getCurrentUser().getSiteID());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -164,7 +168,11 @@ public class UserHelper<T> {
         if (!NetworkManager.isNetworkAvailable(context)) {
             throw new MyException(R.string.network_invalid);
         }
-
+        try {
+            js.put("siteID", UserHelper.getCurrentUser().getSiteID());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, "getMessageList: js=" + js.toString());
         HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.SEARCH_MSG_LIST, js);//WebUrl.UserManager.SEARCH_MSG_LIST
         if (httpResult.hasError()) {
@@ -190,7 +198,7 @@ public class UserHelper<T> {
 
         JSONObject js = new JSONObject();
         try {
-            js.put("clientid", clientid);
+            js.put("clientID", clientid);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -287,4 +295,5 @@ public class UserHelper<T> {
         }
 
     }
+
 }

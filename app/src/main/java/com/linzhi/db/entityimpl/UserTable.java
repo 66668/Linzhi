@@ -14,6 +14,7 @@ public class UserTable extends TableBase {
 
     public static String C_userName = "userName";
     public static String C_Password = "password";
+    public static String C_SiteID = "siteid";
 
 
     public UserTable() {
@@ -33,11 +34,11 @@ public class UserTable extends TableBase {
 
         _current.Add(C_userName, new ColumnInfo(C_userName, "userName", false, "String"));
         _current.Add(C_Password, new ColumnInfo(C_Password, "Password", false, "String"));
+        _current.Add(C_SiteID, new ColumnInfo(C_SiteID, "siteid", false, "String"));
     }
 
 
     //重写父类方法 GetColumnInfoByName，返回放入表格的信息，外部未调用
-
 
 
     //
@@ -50,8 +51,10 @@ public class UserTable extends TableBase {
         return GetColumnInfoByName(C_userName);
     }
 
-
-
+    //
+    public ColumnInfo siteID() {
+        return GetColumnInfoByName(C_SiteID);
+    }
 
 
 }

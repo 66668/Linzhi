@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="4">
 
         <TextView
             android:id="@+id/tv_time"
@@ -27,6 +27,16 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="姓名"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_textSize_default16"/>
+
+        <TextView
+            android:id="@+id/tv_car"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="识别区域"
             android:textColor="@android:color/black"
             android:textSize="@dimen/common_textSize_default16"/>
 

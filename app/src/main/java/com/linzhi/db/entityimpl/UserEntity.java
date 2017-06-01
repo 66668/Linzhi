@@ -38,6 +38,15 @@ public class UserEntity extends EntityBase {
 
     }
 
+    //保存网点号
+    public String getSiteID() {
+        return (String) GetData(UserTable.C_SiteID);
+    }
+
+    public void setSiteID(String value) {
+        SetData(UserTable.C_SiteID, value);
+
+    }
 
 
 }

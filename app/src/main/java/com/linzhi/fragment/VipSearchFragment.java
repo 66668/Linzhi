@@ -18,13 +18,11 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.linzhi.VipUpdateActivity;
 import com.linzhi.R;
+import com.linzhi.UpdateDetailActivity;
 import com.linzhi.adapter.VipSearchAdapter;
 import com.linzhi.base.BaseFragment;
 import com.linzhi.common.MyException;
-import com.linzhi.dialog.DetailRecordDialog;
 import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.model.DetailModel;
@@ -196,7 +194,14 @@ public class VipSearchFragment extends BaseFragment {
                     break;
                 case SEARCH_DETAILE_SUCCESS://
                     DetailModel model = (DetailModel) msg.obj;
-                    dialogShow(model);
+                    //跳转
+                    Intent intent = new Intent(getActivity(), UpdateDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("DetailModel", model);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+//                    dialogShow(model);
                     break;
 
                 case SEARCH_DETAILE_FAILED:
@@ -207,33 +212,33 @@ public class VipSearchFragment extends BaseFragment {
         }
     };
 
-    /**
-     * 弹窗现实详情
-     */
-    private void dialogShow(final DetailModel model) {
-        Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
-
-
-        final DetailRecordDialog dialog = new DetailRecordDialog(getActivity(), model);
-        dialog.show();
-        dialog.setClicklistener(new DetailRecordDialog.ClickListenerInterface() {
-            @Override
-            public void forSure() {
-                //修改
-                Intent intent = new Intent(getActivity(), VipUpdateActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("DetailModel", model);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-
-            @Override
-            public void forCancel() {
-                dialog.dismiss();
-            }
-        });
-    }
+    //    /**
+    //     * 弹窗现实详情
+    //     */
+    //    private void dialogShow(final DetailModel model) {
+    //        Log.d("SJY", "dialogShow: 弹窗详情数据：" + (new Gson()).toJson(model).toString());
+    //
+    //
+    //        final DetailRecordDialog dialog = new DetailRecordDialog(getActivity(), model);
+    //        dialog.show();
+    //        dialog.setClicklistener(new DetailRecordDialog.ClickListenerInterface() {
+    //            @Override
+    //            public void forSure() {
+    //                //修改
+    //                Intent intent = new Intent(getActivity(), UpdateDetailActivity.class);
+    //                Bundle bundle = new Bundle();
+    //                bundle.putSerializable("DetailModel", model);
+    //                intent.putExtras(bundle);
+    //                startActivity(intent);
+    //                dialog.dismiss();
+    //            }
+    //
+    //            @Override
+    //            public void forCancel() {
+    //                dialog.dismiss();
+    //            }
+    //        });
+    //    }
 
     @Override
     public String getFragmentName() {

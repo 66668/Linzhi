@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">林志玲HD</string>
+    <string name="app_name">VIP迎宾HD</string>
     <string name="network_invalid">网络不给力，请检查网络连接！</string>
 
     <!-- 登录-->
@@ -9,7 +9,7 @@
     <string name="hint_netid">请输入网点号</string>
 
     <!-- 主界面-->
-    <string name="msg_list">信息列表</string>
+    <string name="msg_list">消息列表</string>
     <string name="reg_search">信息查询</string>
     <string name="vip_reg">VIP注册</string>
 
@@ -17,10 +17,12 @@
     <string name="name">姓   名:</string>
     <string name="gender">性   别:</string>
     <string name="phone">电   话:</string>
+    <string name="carNum">车   牌:</string>
     <string name="cardId">身份证号:</string>
     <string name="level">客户等级:</string>
     <string name="remark">备注信息:</string>
     <string name="signin">提 交</string>
+    <string name="btn_clear">清 空</string>
     <string name="clientid">客户号</string>
     <string name="clientid_hint">请输入客户号</string>
     <string name="sure">修改</string>
@@ -38,6 +40,7 @@
     <string name="remark_hint">请输入备注信息</string>
     <string name="cardId_hint">请输入身份证号</string>
     <string name="phone_hint">请输入您的电话</string>
+    <string name="car_hint">请输入车牌号码</string>
     <string name="name_hint">请输入姓名</string>
 
     <!-- list-->

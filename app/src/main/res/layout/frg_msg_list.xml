@@ -19,11 +19,11 @@
             android:layout_toLeftOf="@+id/et_searchName"
             android:background="@drawable/search_tv_style"
             android:drawableRight="@mipmap/calendar"
-            android:textSize="@dimen/common_textSize_default13"
             android:gravity="center_vertical|left"
             android:hint="请输入日期"
             android:padding="5dp"
-            android:paddingLeft="30dp"/>
+            android:paddingLeft="30dp"
+            android:textSize="@dimen/common_textSize_default13"/>
 
         <EditText
             android:id="@+id/et_searchName"
@@ -36,26 +36,25 @@
             android:gravity="center_vertical|left"
             android:hint="@string/search_name_hint"
             android:padding="5dp"
-            android:textSize="@dimen/common_textSize_default13"
-            android:paddingLeft="30dp"/>
+            android:paddingLeft="30dp"
+            android:textSize="@dimen/common_textSize_default13"/>
 
         <TextView
             android:id="@+id/tv_fresh"
             android:layout_width="65dp"
             android:layout_height="35dp"
-            android:textSize="@dimen/common_textSize_default13"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:background="@drawable/login_tv_style"
             android:gravity="center"
             android:text="刷新"
-            android:textColor="@color/logincolor"/>
+            android:textColor="@color/logincolor"
+            android:textSize="@dimen/common_textSize_default13"/>
 
         <TextView
             android:id="@+id/tv_search"
             android:layout_width="65dp"
-            android:textSize="@dimen/common_textSize_default13"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
@@ -63,7 +62,8 @@
             android:background="@drawable/login_btn_style"
             android:gravity="center"
             android:text="@string/search"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textSize_default13"/>
 
     </RelativeLayout>
 
@@ -87,7 +87,7 @@
             android:layout_alignParentTop="true"
             android:background="@color/columnColor"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="4">
 
             <TextView
                 android:layout_width="0dp"
@@ -104,6 +104,15 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="姓名"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_textSize_default16"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="识别区域"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/common_textSize_default16"/>
 
