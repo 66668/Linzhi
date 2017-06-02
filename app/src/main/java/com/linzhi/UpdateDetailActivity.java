@@ -51,6 +51,7 @@ import butterknife.ButterKnife;
 
 /**
  * 修改注册信息
+ * 如果有车牌，禁止修改，如果没有车牌，可添加
  * Created by sjy on 2017/4/21.
  */
 
@@ -80,8 +81,12 @@ public class UpdateDetailActivity extends BaseActivity {
     @ViewInject(id = R.id.et_remark)
     EditText et_remark;
 
+    //车牌
     @ViewInject(id = R.id.et_carNum)
     EditText et_carNum;
+    //车牌
+    @ViewInject(id = R.id.tv_carNum)
+    TextView tv_carNum;
 
     @ViewInject(id = R.id.btn_signin, click = "forChange")
     Button btn_signin;
@@ -230,7 +235,19 @@ public class UpdateDetailActivity extends BaseActivity {
         et_phone.setText(model.getClientPhone());
         et_cardid.setText(model.getIDCardNo());
         et_remark.setText(model.getRemark());
-        et_carNum.setText(model.getCarNumList().get(0).getCarNum());
+
+        String mCarNum = model.getCarNumList().get(0).getCarNum();
+
+        if (!TextUtils.isEmpty(mCarNum)) {
+            //只展示车牌
+            et_carNum.setVisibility(View.GONE);
+            tv_carNum.setVisibility(View.VISIBLE);
+            tv_carNum.setText(mCarNum);
+        } else {
+            //可修改车牌
+            et_carNum.setVisibility(View.VISIBLE);
+            tv_carNum.setVisibility(View.GONE);
+        }
 
         //显示等级 RadioGroup赋值1 钻石 -->5普通
         switch (model.getClientLevel()) {

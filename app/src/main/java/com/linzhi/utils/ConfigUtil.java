@@ -27,6 +27,7 @@ public class ConfigUtil {
     private static final String SITEID = "siteid";//网点号
     private static final String AUTO_LOGIN = "auto_login";
     private static final String USERENTITY = "user_entity";
+    private static final String MAXTIME = "maxtime";
 
     //登录内容保存
     @SuppressLint("CommitPrefEdits")
@@ -121,6 +122,16 @@ public class ConfigUtil {
     public void setAutoLogin(boolean flag) {
         editor.putBoolean(AUTO_LOGIN, flag);
         editor.commit();
+    }
+
+    //保存最新的数据时间，定时刷新使用
+    public void setMaxTime(String timestr) {
+        editor.putString(MAXTIME, timestr);
+        editor.commit();
+    }
+
+    public String getMaxtime() {
+        return sp.getString(MAXTIME, Utils.getCurrentTime());
     }
 
 }

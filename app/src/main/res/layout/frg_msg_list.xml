@@ -4,11 +4,32 @@
                 android:layout_height="match_parent">
 
     <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_newMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/tv_searchName"
+            android:background="@drawable/search_tv_style"
+            android:drawableRight="@mipmap/down_arrow"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:paddingLeft="30dp"
+            android:text="有新的消息请刷新!"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/common_textSize_default13"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/tv_time"
@@ -23,7 +44,8 @@
             android:hint="请输入日期"
             android:padding="5dp"
             android:paddingLeft="30dp"
-            android:textSize="@dimen/common_textSize_default13"/>
+            android:textSize="@dimen/common_textSize_default13"
+            />
 
         <EditText
             android:id="@+id/et_searchName"

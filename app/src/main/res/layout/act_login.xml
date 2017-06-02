@@ -13,6 +13,8 @@
         android:layout_width="370dp"
         android:layout_height="456dp"
         android:background="@drawable/login_layout_style"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center_horizontal">
 
         <ImageView
@@ -20,30 +22,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
             android:layout_marginTop="36dp"
-            android:layout_centerHorizontal="true"
             android:background="@mipmap/logo"/>
+
         <LinearLayout
             android:id="@+id/layout_siteid"
+            android:layout_width="302dp"
+            android:layout_height="47dp"
             android:layout_below="@+id/img"
-            android:background="@drawable/login_tv_style"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="34dp"
-            android:layout_width="302dp"
-            android:orientation="horizontal"
-            android:layout_height="47dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_tv_style"
+            android:orientation="horizontal">
+
             <ImageView
-                android:src="@mipmap/lg_netid"
                 android:layout_width="47dp"
-                android:layout_height="47dp"/>
+                android:layout_height="47dp"
+                android:src="@mipmap/lg_netid"/>
+
             <Spinner
                 android:id="@+id/tv_SiteID"
-                android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/hint_netid"
                 android:textColor="@android:color/black"

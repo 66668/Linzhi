@@ -17,6 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <View
@@ -194,7 +196,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
@@ -225,7 +228,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
@@ -245,6 +249,17 @@
                     android:hint="@string/car_hint"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_textSize_default14"/>
+
+                <TextView
+                    android:id="@+id/tv_carNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/et_reg_style"
+                    android:gravity="center_vertical"
+                    android:hint="@string/car_hint"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_textSize_default14"/>
+
             </LinearLayout>
 
             <View
@@ -419,8 +434,9 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="top|center_horizontal"
-                    android:gravity="center_vertical"
+                    android:gravity="top|"
                     android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
                     android:text="@string/remark"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/common_textSize_default14"/>
@@ -441,7 +457,8 @@
                             android:gravity="top|left"
                             android:hint="@string/remark_hint"
                             android:maxLength="1000"
-                            android:padding="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="10dp"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/common_textSize_default14"/>
                     </RelativeLayout>

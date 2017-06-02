@@ -18,7 +18,7 @@ public class WebUrl {
 
     //图片路径要使用
     public static String getURL() {
-        return LOGIN_URL + "/";
+        return LOGIN_URL + GEN + "/";
     }
 
     /**

@@ -61,6 +61,8 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tv_mind"
                 android:background="@android:color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <View
@@ -177,6 +179,7 @@
                         android:background="@drawable/et_reg_style"
                         android:gravity="center_vertical"
                         android:hint="@string/phone_hint"
+                        android:inputType="number"
                         android:maxLength="11"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/common_textSize_default14"/>

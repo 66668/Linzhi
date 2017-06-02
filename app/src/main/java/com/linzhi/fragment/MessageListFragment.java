@@ -28,6 +28,7 @@ import com.linzhi.dialog.Loading;
 import com.linzhi.helper.UserHelper;
 import com.linzhi.model.DetailModel;
 import com.linzhi.model.MessageListModel;
+import com.linzhi.utils.ConfigUtil;
 import com.linzhi.utils.PageUtil;
 import com.linzhi.widget.RefreshAndLoadListView;
 
@@ -39,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +64,10 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     @BindView(R.id.tv_search)
     TextView tv_search;
 
+    //新的消息
+    @BindView(R.id.tv_newMsg)
+    TextView tv_newMsg;
+
     //刷新
     @BindView(R.id.tv_fresh)
     TextView tv_fresh;
@@ -73,6 +80,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     private static final String TAG = "MessageListFragment";
     //展示数据 常量
     private static final int GET_DATA_SUCCESS = 10;//获取
+    private static final int FRESHING_DATA_SUCCESS = 5;//定时刷新
     private static final int FRESH_DATA_SUCCESS = 11;//刷新
     private static final int LOAD_DATA_SUCCESS = 12;//加载
     private static final int GET_DATA_FAILED = 13;
@@ -99,9 +107,13 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     //变量
     private String maxTime = "";
     private String minTime = "";
+    private String freshTime = "";//定时刷新
+    private boolean isFreshing = false;//是否在刷新
+    Timer timer;
 
     private String searchTime = "";
     private String searchName = "";
+
     private Boolean FreshTrue_SearchFalse = true;//数据展示 和搜索公用一个listView,区分展示true 和 搜索false
     private ArrayList<MessageListModel> listdate;
     private DetailModel model;
@@ -123,7 +135,37 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         initView(view);
         getDate();
         initListener();
+        isFreshing = true;
         return view;
+    }
+
+    //定时刷新
+    private synchronized void forwhile() {
+
+        if (timer == null) {
+            timer = new Timer();
+        }
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+
+                //执行的方法：(已经是异步，不用再加异步)
+                ConfigUtil configUtil = new ConfigUtil(getActivity());
+                freshTime = configUtil.getMaxtime();
+                Log.d(TAG, "forwhile: 定时刷新forwhile（）" + freshTime);
+                List<MessageListModel> listdate = null;
+                try {
+                    listdate = UserHelper.getMessageList(getActivity(), freshTime, "");
+                } catch (MyException e) {
+                    e.printStackTrace();
+                }
+                if (listdate != null && listdate.size() > 0) {
+                    handler.sendMessage(handler.obtainMessage(FRESHING_DATA_SUCCESS, listdate));
+                }
+            }
+
+        };
+        timer.schedule(task, 5000, 10000);
     }
 
 
@@ -172,7 +214,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                         }
                     } catch (MyException e) {
                         Log.d(TAG, "run: error=" + e.toString());
-                        PageUtil.DisplayToast(e.toString());
+                        //                        PageUtil.DisplayToast(e.toString());
                         handler.sendMessage(handler.obtainMessage(FRESH_DATA_FAILED, e.toString()));
                     }
                 }
@@ -229,7 +271,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                         }
                     } catch (MyException e) {
                         Log.d(TAG, "run: error=" + e.toString());
-                        PageUtil.DisplayToast(e.toString());
+                        //                        PageUtil.DisplayToast(e.toString());
                         handler.sendMessage(handler.obtainMessage(LOAD_DATA_FAILED, e.toString()));
 
                     }
@@ -293,14 +335,6 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: 进入界面刷新");
-        adapter = new MessageListAdapter(getActivity());
-        listView.setAdapter(adapter);
-        getDate();
-    }
 
     /**
      * 详情接口
@@ -386,6 +420,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     //刷新 设置 初始化参数
     @OnClick(R.id.tv_fresh)
     public void freshDate(View view) {
+        //消息提示不可见
+        tv_newMsg.setVisibility(View.INVISIBLE);
+        //初始化参数
         FreshTrue_SearchFalse = true;
         minTime = "";
         maxTime = "";
@@ -441,6 +478,15 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
                     adapter.insertEntityList(listdate);
                     //
                     listView.loadAndFreshComplete();
+                    break;
+
+                case FRESHING_DATA_SUCCESS://定时刷新
+                    listdate = (ArrayList<MessageListModel>) msg.obj;
+                    setMaxTime(listdate.get(0));
+
+                    //设置消息提示可见
+                    tv_newMsg.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "handleMessage: 定时刷新");
                     break;
 
                 case SEARCH_MORE_SUCCESS://搜索加载
@@ -529,6 +575,12 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     //赋值
     private void setMaxTime(MessageListModel model) {
         maxTime = model.getTime();
+        //保存，定时刷新使用
+        ConfigUtil configUtil = new ConfigUtil(getActivity());
+        String time = configUtil.getMaxtime();
+        if (!time.contains(maxTime)) {
+            configUtil.setMaxTime(maxTime);
+        }
     }
 
     private void setMinTime(MessageListModel model) {
@@ -599,6 +651,27 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     @Override
     protected String setFragmentName() {
         return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: 进入界面刷新");
+        maxTime = "";
+        minTime = "";
+
+        adapter = new MessageListAdapter(getActivity());
+        listView.setAdapter(adapter);
+        forwhile();//定时刷新
+        getDate();
     }
 
     //重写setMenuVisibility方法，不然会出现叠层的现象

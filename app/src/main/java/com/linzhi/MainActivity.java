@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -235,4 +236,17 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 后台运行设置
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ||keyCode == KeyEvent.KEYCODE_HOME) {
+            moveTaskToBack(true);
+//            android.os.Process.killProcess(android.os.Process.myPid());
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
 }
