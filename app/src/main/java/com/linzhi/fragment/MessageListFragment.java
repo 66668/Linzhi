@@ -69,7 +69,6 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
     @BindView(R.id.et_searchName)
     EditText et_searchName;
 
-
     //常量
     private static final String TAG = "MessageListFragment";
     //展示数据 常量
@@ -148,8 +147,9 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
 
                 MessageListModel model = (MessageListModel) adapter.getItem(newPosition);//
                 String clientid = model.getClientId();
+                String recordId = model.getRecordID();
                 Log.d(TAG, "onItemClick: clientid=" + clientid);
-                getItemDetail(clientid);
+                getItemDetail(clientid, recordId);
             }
         });
     }
@@ -293,17 +293,35 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: 进入界面刷新");
+        adapter = new MessageListAdapter(getActivity());
+        listView.setAdapter(adapter);
+        getDate();
+    }
+
     /**
      * 详情接口
      */
-    private void getItemDetail(final String clientidDD) {
+    private void getItemDetail(final String clientidDD, final String recordID) {
 
         //详情
         Loading.run(getActivity(), new Runnable() {
             @Override
             public void run() {
                 try {
-                    DetailModel model = UserHelper.getItemDetail(getActivity(), clientidDD);
+                    JSONObject js = new JSONObject();
+                    try {
+                        js.put("clientID", clientidDD);
+                        js.put("isRead", "1");
+                        js.put("recordID", recordID);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    DetailModel model = UserHelper.getItemDetail(getActivity(), js);
                     handler.sendMessage(handler.obtainMessage(GET_DETAIL_SUCCESS, model));
 
                 } catch (MyException e) {

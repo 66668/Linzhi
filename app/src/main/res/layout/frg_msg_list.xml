@@ -80,6 +80,12 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/view">
 
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="40dp">
+        </View>
+
         <LinearLayout
             android:id="@+id/layout_title"
             android:layout_width="match_parent"

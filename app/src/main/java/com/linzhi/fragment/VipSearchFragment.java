@@ -167,7 +167,13 @@ public class VipSearchFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    DetailModel model = UserHelper.getItemDetail(getActivity(), clientID);
+                    JSONObject js = new JSONObject();
+                    try {
+                        js.put("clientID", clientID);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    DetailModel model = UserHelper.getItemDetail(getActivity(), js);
                     handler.sendMessage(handler.obtainMessage(SEARCH_DETAILE_SUCCESS, model));
 
                 } catch (MyException e) {
@@ -201,7 +207,7 @@ public class VipSearchFragment extends BaseFragment {
                     intent.putExtras(bundle);
                     startActivity(intent);
 
-//                    dialogShow(model);
+                    //                    dialogShow(model);
                     break;
 
                 case SEARCH_DETAILE_FAILED:
@@ -327,6 +333,11 @@ public class VipSearchFragment extends BaseFragment {
                 popupWindow.showAsDropDown(v);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     //重写setMenuVisibility方法，不然会出现叠层的现象

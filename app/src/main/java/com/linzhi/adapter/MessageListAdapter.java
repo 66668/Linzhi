@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.linzhi.R;
@@ -32,6 +33,7 @@ public class MessageListAdapter extends BaseAdapter {
         public TextView tv_name;
         public TextView tv_level;
         public TextView tv_car;
+        public ImageView isRead;
     }
 
     public MessageListAdapter(Context context) {
@@ -92,6 +94,7 @@ public class MessageListAdapter extends BaseAdapter {
             holder.tv_level = (TextView) convertView.findViewById(R.id.tv_level);
             holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             holder.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            holder.isRead = (ImageView) convertView.findViewById(R.id.imgIsread);
             convertView.setTag(holder);
         } else {
             holder = (WidgetHolder) convertView.getTag();
@@ -104,6 +107,11 @@ public class MessageListAdapter extends BaseAdapter {
 
         String levelName = AppCommonUtils.getTransLevel(model.getClientLevel());
         holder.tv_level.setText(levelName);
+        if (model.getIsRead().contains("1")) {
+            holder.isRead.setVisibility(View.INVISIBLE);
+        } else {
+            holder.isRead.setVisibility(View.VISIBLE);
+        }
 
         return convertView;
     }

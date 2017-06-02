@@ -13,6 +13,32 @@ public class MessageListModel implements Serializable {
     private String time;
     private String clientLevel;
     private String remake;
+    private String isRead;
+    private String recordID;
+
+    public String getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
+
+    public String getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(String isRead) {
+        this.isRead = isRead;
+    }
+
+    public String getRecordID() {
+        return recordID;
+    }
+
+    public void setRecordID(String recordID) {
+        this.recordID = recordID;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

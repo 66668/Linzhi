@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -68,6 +69,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.act_main);
 
         initFragment();
@@ -85,7 +87,7 @@ public class MainActivity extends BaseActivity {
         float density = metric.density;
         float densityDpi = metric.densityDpi;
         final float scale = getResources().getDisplayMetrics().density;
-        Log.d(TAG, "dp宽=" + (width / density) + "--dp高=" + (hight / density) + "--densityDpi=" + densityDpi + "--density=" + density + "--densityDpi=" + densityDpi+"--scale"+scale);
+        Log.d(TAG, "dp宽=" + (width / density) + "--dp高=" + (hight / density) + "--densityDpi=" + densityDpi + "--density=" + density + "--densityDpi=" + densityDpi + "--scale" + scale);
     }
 
     private void initFragment() {

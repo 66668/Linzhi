@@ -14,7 +14,6 @@ import com.linzhi.db.entityimpl.UserEntity;
 import com.linzhi.model.DetailModel;
 import com.linzhi.model.MessageListModel;
 import com.linzhi.model.SiteIDModel;
-import com.linzhi.model.VipDetailModel;
 import com.linzhi.model.VipSearchListModel;
 import com.linzhi.utils.APIUtils;
 import com.linzhi.utils.ConfigUtil;
@@ -191,18 +190,11 @@ public class UserHelper<T> {
      * @return
      * @throws MyException
      */
-    public static DetailModel getItemDetail(Context context, String clientid) throws MyException {//DetailModel
+    public static DetailModel getItemDetail(Context context, JSONObject js) throws MyException {//DetailModel
         if (!NetworkManager.isNetworkAvailable(context)) {
             throw new MyException(R.string.network_invalid);
         }
 
-        JSONObject js = new JSONObject();
-        try {
-            js.put("clientID", clientid);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         Log.d(TAG, "getMessageList: js=" + js.toString());
         HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.ITEM_DETAIL, js);
         if (httpResult.hasError()) {
@@ -249,34 +241,6 @@ public class UserHelper<T> {
         }.getType());
     }
 
-    /**
-     * 03-02 vip查询详情
-     *
-     * @param context
-     * @return
-     * @throws MyException
-     */
-    public static VipDetailModel getVipDetail(Context context, String clientid) throws MyException {//DetailModel
-        if (!NetworkManager.isNetworkAvailable(context)) {
-            throw new MyException(R.string.network_invalid);
-        }
-
-        JSONObject js = new JSONObject();
-        try {
-            js.put("clientid", clientid);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(TAG, "getMessageList: js=" + js.toString());
-        HttpResult httpResult = APIUtils.postForObject(WebUrl.UserManager.VIP_ITEM_DETAIL, js);
-        if (httpResult.hasError()) {
-            throw httpResult.getError();
-        }
-        return (new Gson()).fromJson(httpResult.jsonObject.toString(), VipDetailModel.class);
-
-    }
 
     /**
      * 04-01注册

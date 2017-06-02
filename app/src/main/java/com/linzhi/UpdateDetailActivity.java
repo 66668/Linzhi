@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -160,6 +161,10 @@ public class UpdateDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //设置无title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.act_detail_change);
         ButterKnife.bind(this);
         initMyView();
@@ -263,7 +268,7 @@ public class UpdateDetailActivity extends BaseActivity {
 
         //显示图片
         String url = WebUrl.getURL() + model.getImgPath();
-        //        Log.d(TAG, "setValue: 图片路径：" + url);
+        Log.d(TAG, "setValue: 图片路径：" + url);
         imgLoader.displayImage(url, img, imgOptions);
 
 
@@ -404,6 +409,7 @@ public class UpdateDetailActivity extends BaseActivity {
 
     private void getInput() {
         carNum = et_carNum.getText().toString();
+        Log.d(TAG, "getInput: carNum" + carNum);
         name = et_name.getText().toString();
         phone = et_phone.getText().toString();
         cardid = et_cardid.getText().toString();
@@ -423,6 +429,7 @@ public class UpdateDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 img_add.setImageBitmap(null);
+                img_add.setBackground(getResources().getDrawable(R.mipmap.vip_default_photo));
                 picbitmap = null;
                 cleanImgBtnFalse();//按钮变色
                 //

@@ -409,36 +409,46 @@
                 android:layout_height="1dp"
                 android:background="@color/bg_tv_color"/>
 
-            <ScrollView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="150dp"
+                android:background="@android:color/white">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/white">
+                    android:layout_gravity="top|center_horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="@string/remark"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_textSize_default14"/>
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
-                        android:text="@string/remark"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_textSize_default14"/>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
 
-                    <EditText
-                        android:id="@+id/et_remark"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/et_reg_style"
-                        android:gravity="center_vertical"
-                        android:hint="@string/remark_hint"
-                        android:maxLength="1000"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/common_textSize_default14"/>
-                </LinearLayout>
-            </ScrollView>
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/et_remark"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:background="@null"
+                            android:gravity="top|left"
+                            android:hint="@string/remark_hint"
+                            android:maxLength="1000"
+                            android:padding="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/common_textSize_default14"/>
+                    </RelativeLayout>
+
+                </ScrollView>
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
