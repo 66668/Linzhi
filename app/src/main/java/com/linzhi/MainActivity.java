@@ -1,7 +1,12 @@
 package com.linzhi;
 
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.linzhi.base.BaseActivity;
 import com.linzhi.base.BaseFragment;
@@ -237,16 +243,35 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 后台运行设置
+     * 后台运行设置(无法设置home监听)
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK ||keyCode == KeyEvent.KEYCODE_HOME) {
-            moveTaskToBack(true);
-//            android.os.Process.killProcess(android.os.Process.myPid());
+        PackageManager pm = getPackageManager();
+        ResolveInfo homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0);
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Log.d(TAG, "onKeyDown: back键监听");
+            ActivityInfo ai = homeInfo.activityInfo;
+            Intent startIntent = new Intent(Intent.ACTION_MAIN);
+            startIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            startIntent.setComponent(new ComponentName(ai.packageName, ai.name));
+            startActivitySafely(startIntent);
             return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        } else
+            return super.onKeyDown(keyCode, event);
 
+    }
+
+    private void startActivitySafely(Intent intent) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "null",
+                    Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(this, "null",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }
