@@ -42,7 +42,8 @@
             android:layout_toLeftOf="@+id/tv_quit"
             android:gravity="center_vertical"
             android:text="用户名"
-            android:textSize="@dimen/common_textSize_default16"/>
+            android:textSize="@dimen/common_textSize_default16"
+            android:visibility="invisible"/>
 
         <com.linzhi.widget.CircleImageView
             android:id="@+id/img_user"
@@ -52,6 +53,7 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/tv_userName"
             android:background="@mipmap/default_photo"
+            android:visibility="invisible"
             app:border_width="100dp"/>
     </RelativeLayout>
 </LinearLayout>
