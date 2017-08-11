@@ -165,7 +165,7 @@ public class MessageListFragment extends BaseFragment implements RefreshAndLoadL
             }
 
         };
-        timer.schedule(task, 5000, 10000);
+        timer.schedule(task, 10000, 40000);
     }
 
 

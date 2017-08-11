@@ -141,7 +141,6 @@ public class VipRegistFragment extends BaseFragment {
         return messageListFragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
