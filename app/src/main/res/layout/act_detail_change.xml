@@ -434,7 +434,6 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="top|center_horizontal"
-                    android:gravity="top|"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:text="@string/remark"
